@@ -12,7 +12,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 alias rbash='. ~/.bash_aliases'
 
 #open:
-alias open="sudo xdg-open"
+alias open="xdg-open"
 
 #system
 alias sleep="sudo systemctl suspend"
@@ -48,13 +48,43 @@ alias intellij='echo "Starting IntelliJ..." &&
 #empty trash
 alias etrash="sudo rm -rf ~/.local/share/Trash/files*"
 
+#hacker news
+alias hack="chrome news.ycombinator.com"
+
+#mint note
+alias note="code ~/devel/github/notes/linux/LINUX.md"
+
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#open url
+chrome() {
+    if [ -z $1 ]; then
+        run chromium-browser
+    else
+        xdg-open 'https://'$1 &>/dev/null &
+    fi
+}
+
+#google search
+google() {
+    if [ -z $1 ]; then
+        echo "Invalid input"
+        return 0
+    else
+        local search=''
+        for i in $@; do
+            search="$search%20$i"
+        done
+        xdg-open 'http://www.google.com/search?q='$search \
+            &>/dev/null &
+    fi
+}
+
 #redshift
 red() {
     if [ "$1" == "stop" ]; then
         redshift -x
-    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ] ; then
-        redshift -O $(($1*100))
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
+        redshift -O $(($1 * 100))
     else
         echo "Invalid input"
     fi
@@ -91,11 +121,6 @@ blue() {
     fi
 }
 
-#mint note
-note() {
-    code ~/devel/github/notes/linux/LINUX.md
-}
-
 #copy bash files
 copybash() {
     sudo cp \
@@ -105,7 +130,8 @@ copybash() {
 
 #uninstall app
 remove() {
-    sudo apt-get --purge remove $1 && sudo apt-get autoremove
+    sudo apt-get --purge remove $1 &&
+        sudo apt-get autoremove
 }
 
 #weather
