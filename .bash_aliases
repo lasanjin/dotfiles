@@ -12,7 +12,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 alias rbash='. ~/.bash_aliases'
 
 #open:
-alias open="xdg-open"
+alias open="xdg-open &>/dev/null &"
 
 #system
 alias sleep="sudo systemctl suspend"
@@ -113,8 +113,8 @@ run() {
 blue() {
     if [ "$1" == "on" ] || [ "$1" == "off" ]; then
         local dir=$(pwd)
-        cd ~/../../etc/init.d/ &&
-            sudo bluetooth "$1" && cd "$dir"
+        cd ~/../../etc/init.d/ && \ 
+        sudo bluetooth "$1" && cd "$dir"
     else
         echo "Invalid input"
         return 0
@@ -124,30 +124,24 @@ blue() {
 #copy bash files
 copybash() {
     sudo cp \
-        -rf {~/.weather.sh,~/.expressen.sh,~/.bash_aliases} \
+        -rf ~/.bash_aliases \
         ~/devel/github/dotfiles
 }
 
 #uninstall app
 remove() {
-    sudo apt-get --purge remove $1 &&
-        sudo apt-get autoremove
-}
-
-#weather
-w() {
-    . ~/.weather.sh
-    w $1 $2
-}
-
-#weather
-weather() {
-    . ~/.weather.sh
-    weather $1
+    sudo apt-get --purge remove $1
+    sudo apt-get autoremove
 }
 
 #expressen lunch
 lunch() {
-    . ~/.expressen.sh
-    lunch $1 $2
+    dev && cd expressen-lunch-cli/
+    ./expressen.sh $1 $2
+}
+
+#smhi
+smhi() {
+    dev && cd smhi-cli/
+    ./smhi.sh $1
 }
