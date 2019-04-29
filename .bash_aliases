@@ -11,9 +11,6 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #reload bash
 alias rbash='. ~/.bash_aliases'
 
-#open:
-alias open="xdg-open &>/dev/null &"
-
 #system
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
@@ -55,6 +52,16 @@ alias hack="chrome news.ycombinator.com"
 alias note="code ~/devel/github/notes/linux/LINUX.md"
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#open
+op() {
+    if [ -z ! $1 ]; then
+        echo "Invalid input"
+        return 0
+    fi
+
+    xdg-open $1 &>/dev/null &
+}
+
 #open url
 chrome() {
     if [ -z $1 ]; then
@@ -136,12 +143,15 @@ remove() {
 
 #expressen lunch
 lunch() {
-    dev && cd expressen-lunch-cli/
-    ./expressen.sh $1 $2
+    . ~/devel/github/expressen-lunch-cli/expressen.sh $1 $2
 }
 
 #smhi
 smhi() {
-    dev && cd smhi-cli/
-    ./smhi.sh $1
+    . ~/devel/github/smhi-cli/smhi.sh $1 $2 $3
+}
+
+#expressen search
+expsearch() {
+    . ~/devel/github/expressen-search-cli/expsearch.sh $@
 }
