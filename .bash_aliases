@@ -51,6 +51,9 @@ alias hack="chrome news.ycombinator.com"
 #mint note
 alias note="code ~/devel/github/notes/linux/LINUX.md"
 
+#battery
+alias bat="upower -i `upower -e | grep 'BAT'` | grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
+
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
 #open
 op() {
@@ -143,7 +146,7 @@ remove() {
 
 #expressen lunch
 lunch() {
-    . ~/devel/github/expressen-lunch-cli/expressen.sh $1 $2
+    . ~/devel/github/expressen-lunch-cli/expressen.sh $1 $2 $3
 }
 
 #smhi
