@@ -1,5 +1,5 @@
 # - - - - - - - - - - - ALIASES - - - - - - - - - - - -
-#bash
+#bash file(s)
 alias cbasha='code ~/.bash_aliases'
 alias cbash='code ~/.bashrc'
 alias nbasha='sudo nano ~/.bash_aliases'
@@ -8,7 +8,7 @@ alias nbash='sudo nano ~/.bashrc'
 #sudo vscode
 alias scode='sudo code --user-data-dir="~/.vscode-root"'
 
-#reload bash
+#reload bash file(s)
 alias rbash='. ~/.bash_aliases'
 
 #system
@@ -18,7 +18,8 @@ alias die="sudo shutdown -h now"
 #change directory
 alias ..="cd ../../"
 alias ...="cd ../../../"
-alias dev="cd ~/devel/github"
+alias dev="cd ~/devel"
+alias repos="cd ~/devel/repos"
 
 #tree
 alias t='sudo tree'
@@ -32,9 +33,6 @@ alias calc='bc -l'
 #time
 alias now='date +%T'
 
-#external ip address
-alias ipe='curl ipinfo.io/ip'
-
 #gnome-calendar
 alias calendar='run gnome-calendar'
 
@@ -45,16 +43,47 @@ alias intellij='echo "Starting IntelliJ..." &&
 #empty trash
 alias etrash="sudo rm -rf ~/.local/share/Trash/files*"
 
-#hacker news
-alias hack="chrome news.ycombinator.com"
-
-#mint note
-alias note="code ~/devel/github/notes/linux/LINUX.md"
+#notes
+alias note="code ~/devel/repos/notes/linux/LINUX.md"
 
 #battery
-alias bat="upower -i `upower -e | grep 'BAT'` | grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
+alias bat="upower -i $(upower -e | grep 'BAT') | \
+grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#redshift
+red() {
+    if [ "$1" == "stop" ]; then
+        redshift -x
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
+        redshift -O $(($1 * 100))
+    else
+        echo "Invalid input"
+    fi
+}
+
+#bluetooth
+blue() {
+    if [ "$1" == "on" ] || [ "$1" == "off" ]; then
+        local dir=$(pwd)
+        cd ~/../../etc/init.d/ && \ 
+        sudo bluetooth "$1" && cd "$dir"
+    else
+        echo "Invalid input"
+        return 0
+    fi
+}
+
+#monitor
+screen() {
+    if [ -z $1 ]; then
+        echo "Invalid input"
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ] && [ $1 -le 100 ]; then
+        param=$(bc <<<"scale=2; $1/100")
+        xrandr --output DP-2 --brightness $param
+    fi
+}
+
 #open
 op() {
     if [ -z ! $1 ]; then
@@ -89,17 +118,6 @@ google() {
     fi
 }
 
-#redshift
-red() {
-    if [ "$1" == "stop" ]; then
-        redshift -x
-    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
-        redshift -O $(($1 * 100))
-    else
-        echo "Invalid input"
-    fi
-}
-
 #clean dns
 cleandns() {
     local dir=$(pwd)
@@ -119,42 +137,20 @@ run() {
     fi
 }
 
-#bluetooth
-blue() {
-    if [ "$1" == "on" ] || [ "$1" == "off" ]; then
-        local dir=$(pwd)
-        cd ~/../../etc/init.d/ && \ 
-        sudo bluetooth "$1" && cd "$dir"
-    else
-        echo "Invalid input"
-        return 0
-    fi
-}
-
-#copy bash files
-copybash() {
-    sudo cp \
-        -rf ~/.bash_aliases \
-        ~/devel/github/dotfiles
-}
-
 #uninstall app
 remove() {
     sudo apt-get --purge remove $1
     sudo apt-get autoremove
 }
 
+#copy bash files
+copybash() {
+    sudo cp \
+        -rf ~/.bash_aliases \
+        ~/devel/repos/dotfiles
+}
+
 #expressen lunch
-lunch() {
-    . ~/devel/github/expressen-lunch-cli/expressen.sh $1 $2 $3
-}
-
-#smhi
-smhi() {
-    . ~/devel/github/smhi-cli/smhi.sh $1 $2 $3
-}
-
-#expressen search
-expsearch() {
-    . ~/devel/github/expressen-search-cli/expsearch.sh $@
+express() {
+    . ~/devel/repos/chalmers-lunch-cli/expressen.sh $1 $2 $3
 }
