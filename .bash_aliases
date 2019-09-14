@@ -1,21 +1,52 @@
+# - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
+source .secret
+
+alias ta="cd ~/documents/chalmers/TA"
+alias chalmers="cd ~/documents/chalmers/"
+alias sshchalmers='ssh -R 52698:localhost:52698 '$SSH_CHALMERS
+
+gitinspect() {
+    ~/devel/repos/gitinspector/gitinspector.py --grading $1
+}
+
+tagroup() {
+    if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 17 ] && [ $1 -le 20 ]; then
+        local current_dir=$(pwd)
+        cd ~/documents/chalmers/TA &&
+            code guidelines.md &&
+            cd groups &&
+            code 'group'$1'/group'$1'.md' &&
+            cd "$current_dir"
+    else
+        echo "Invalid input"
+        return 0
+    fi
+}
+
+# - - - - - - - - - - - KEYS - - - - - - - - - - - -
+# Ctrl+left/right  arrow
+bind '"\e[1;5D" backward-word'
+bind '"\e[1;5C" forward-word'
+
 # - - - - - - - - - - - ALIASES - - - - - - - - - - - -
-#bash file(s)
-alias cbasha='code ~/.bash_aliases'
-alias cbash='code ~/.bashrc'
-alias nbasha='sudo nano ~/.bash_aliases'
-alias nbash='sudo nano ~/.bashrc'
+#bash files
+alias codealias='code ~/.bash_aliases'
+alias codebash='code ~/.bashrc'
+alias nanoalias='sudo nano ~/.bash_aliases'
+alias nanobash='sudo nano ~/.bashrc'
 
 #sudo vscode
-alias scode='sudo code --user-data-dir="~/.vscode-root"'
+alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
 
 #reload bash file(s)
-alias rbash='. ~/.bash_aliases'
+alias rbash='source ~/.bash_aliases'
 
 #system
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 
 #change directory
+alias .="cd .."
 alias ..="cd ../../"
 alias ...="cd ../../../"
 alias dev="cd ~/devel"
@@ -41,16 +72,25 @@ alias intellij='echo "Starting IntelliJ..." &&
 . ~/devel/idea-IU-183.5912.21/bin/idea.sh &>/dev/null &'
 
 #empty trash
-alias etrash="sudo rm -rf ~/.local/share/Trash/files*"
+alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
 
 #notes
-alias note="code ~/devel/repos/notes/linux/LINUX.md"
+alias notes="code ~/devel/repos/notes/linux/LINUX.md"
+alias codenotes="code ~/devel/repos/notes/code/TOOLS.md"
+alias nginxnotes="code ~/devel/repos/notes/code/NGINX.md"
 
 #battery
 alias bat="upower -i $(upower -e | grep 'BAT') | \
 grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#compile and run cpp
+cpp() {
+    g++ -o output $1
+    chmod +x output
+    ./output $2
+}
+
 #redshift
 red() {
     if [ "$1" == "stop" ]; then
@@ -65,9 +105,10 @@ red() {
 #bluetooth
 blue() {
     if [ "$1" == "on" ] || [ "$1" == "off" ]; then
-        local dir=$(pwd)
+        local current_dir=$(pwd)
         cd ~/../../etc/init.d/ && \ 
-        sudo bluetooth "$1" && cd "$dir"
+        sudo bluetooth "$1" &&
+            cd "$current_dir"
     else
         echo "Invalid input"
         return 0
@@ -85,7 +126,7 @@ screen() {
 }
 
 #open
-op() {
+o() {
     if [ -z ! $1 ]; then
         echo "Invalid input"
         return 0
@@ -120,10 +161,10 @@ google() {
 
 #clean dns
 cleandns() {
-    local dir=$(pwd)
+    local current_dir=$(pwd)
     cd /etc/init.d/ &&
         sudo service dns-clean start
-    cd "$dir"
+    cd "$current_dir"
 }
 
 #run app
