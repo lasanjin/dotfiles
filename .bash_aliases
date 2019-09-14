@@ -1,9 +1,11 @@
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
-source .secret
-
 alias ta="cd ~/documents/chalmers/TA"
 alias chalmers="cd ~/documents/chalmers/"
-alias sshchalmers='ssh -R 52698:localhost:52698 '$SSH_CHALMERS
+
+sshchalmers() {
+    source .secret
+    ssh -R 52698:localhost:52698 $SSH_CHALMERS
+}
 
 gitinspect() {
     ~/devel/repos/gitinspector/gitinspector.py --grading $1
@@ -12,10 +14,10 @@ gitinspect() {
 tagroup() {
     if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 17 ] && [ $1 -le 20 ]; then
         local current_dir=$(pwd)
-        cd ~/documents/chalmers/TA &&
-            code guidelines.md &&
-            cd groups &&
-            code 'group'$1'/group'$1'.md' &&
+        cd ~/documents/chalmers/TA && \
+            code guidelines.md && \
+            cd groups && \
+            code 'group'$1'/group'$1'.md' && \
             cd "$current_dir"
     else
         echo "Invalid input"
@@ -46,7 +48,6 @@ alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 
 #change directory
-alias .="cd .."
 alias ..="cd ../../"
 alias ...="cd ../../../"
 alias dev="cd ~/devel"
