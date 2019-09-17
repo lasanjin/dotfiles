@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
 alias ta="cd ~/documents/chalmers/TA"
 alias chalmers="cd ~/documents/chalmers/"
@@ -70,7 +72,7 @@ alias calendar='run gnome-calendar'
 
 #intellij
 alias intellij='echo "Starting IntelliJ..." && 
-. ~/devel/idea-IU-183.5912.21/bin/idea.sh &>/dev/null &'
+. ~/devel/idea-IU-183.5912.21/bin/idea.sh 2>/dev/null'
 
 #empty trash
 alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
@@ -85,6 +87,15 @@ alias bat="upower -i $(upower -e | grep 'BAT') | \
 grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#note
+note() {
+    local rand=$(openssl rand -base64 3)
+    local name='note-'$rand
+    echo -e $(date +%F)'\n' > ~/$name
+    touch ~/$name
+     xdg-open ~/$name 2>/dev/null
+}
+
 #compile and run cpp
 cpp() {
     g++ -o output $1
@@ -128,12 +139,12 @@ screen() {
 
 #open
 o() {
-    if [ -z ! $1 ]; then
+    if [ -z "$1" ]; then
         echo "Invalid input"
         return 0
     fi
 
-    xdg-open $1 &>/dev/null &
+    xdg-open $1 &>/dev/null
 }
 
 #open url
@@ -141,7 +152,7 @@ chrome() {
     if [ -z $1 ]; then
         run chromium-browser
     else
-        xdg-open 'https://'$1 &>/dev/null &
+        xdg-open 'https://'$1 &>/dev/null
     fi
 }
 
@@ -156,7 +167,7 @@ google() {
             search="$search%20$i"
         done
         xdg-open 'http://www.google.com/search?q='$search \
-            &>/dev/null &
+            &>/dev/null
     fi
 }
 
@@ -166,17 +177,6 @@ cleandns() {
     cd /etc/init.d/ &&
         sudo service dns-clean start
     cd "$current_dir"
-}
-
-#run app
-run() {
-    if [ ! -z $1 ]; then
-        exec $1 &>/dev/null &
-        bg
-    else
-        echo "Invalid input"
-        return 0
-    fi
 }
 
 #uninstall app
