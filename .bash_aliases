@@ -5,8 +5,9 @@ alias ta="cd ~/documents/chalmers/TA"
 alias chalmers="cd ~/documents/chalmers/"
 
 sshchalmers() {
-    source .secret
-    ssh -R 52698:localhost:52698 $SSH_CHALMERS
+    source ~/.secret
+    local PORT=$(cat ~/.config/Code/User/settings.json | grep remote.port | sed 's/[^0-9]*//g')
+    ssh -R $PORT':localhost:'$PORT $SSH_CHALMERS
 }
 
 gitinspect() {
@@ -16,10 +17,10 @@ gitinspect() {
 tagroup() {
     if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 17 ] && [ $1 -le 20 ]; then
         local current_dir=$(pwd)
-        cd ~/documents/chalmers/TA && \
-            code guidelines.md && \
-            cd groups && \
-            code 'group'$1'/group'$1'.md' && \
+        cd ~/documents/chalmers/TA &&
+            code guidelines.md &&
+            cd groups &&
+            code 'group'$1'/group'$1'.md' &&
             cd "$current_dir"
     else
         echo "Invalid input"
@@ -49,9 +50,11 @@ alias rbash='source ~/.bash_aliases'
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 
+#A command name that is the name of a directory
+#is executed as if it were the argument to the cd command
+shopt -s autocd
+
 #change directory
-alias ..="cd ../../"
-alias ...="cd ../../../"
 alias dev="cd ~/devel"
 alias repos="cd ~/devel/repos"
 
@@ -91,9 +94,9 @@ grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 note() {
     local rand=$(openssl rand -base64 3)
     local name='note-'$rand
-    echo -e $(date +%F)'\n' > ~/$name
+    echo -e $(date +%F)'\n' >~/$name
     touch ~/$name
-     xdg-open ~/$name 2>/dev/null
+    xdg-open ~/$name 2>/dev/null
 }
 
 #compile and run cpp
