@@ -1,33 +1,5 @@
 #!/bin/bash
 
-# - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
-alias ta="cd ~/documents/chalmers/TA"
-alias chalmers="cd ~/documents/chalmers/"
-
-sshchalmers() {
-    source ~/.secret
-    local PORT=$(cat ~/.config/Code/User/settings.json | grep remote.port | sed 's/[^0-9]*//g')
-    ssh -R $PORT':localhost:'$PORT $SSH_CHALMERS
-}
-
-gitinspect() {
-    ~/devel/repos/gitinspector/gitinspector.py --grading $1
-}
-
-tagroup() {
-    if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 17 ] && [ $1 -le 20 ]; then
-        local current_dir=$(pwd)
-        cd ~/documents/chalmers/TA &&
-            code guidelines.md &&
-            cd groups &&
-            code 'group'$1'/group'$1'.md' &&
-            cd "$current_dir"
-    else
-        echo "Invalid input"
-        return 0
-    fi
-}
-
 # - - - - - - - - - - - KEYS - - - - - - - - - - - -
 # Ctrl+left/right  arrow
 bind '"\e[1;5D" backward-word'
@@ -37,14 +9,11 @@ bind '"\e[1;5C" forward-word'
 #bash files
 alias codealias='code ~/.bash_aliases'
 alias codebash='code ~/.bashrc'
-alias nanoalias='sudo nano ~/.bash_aliases'
-alias nanobash='sudo nano ~/.bashrc'
-
-#sudo vscode
-alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
-
-#reload bash file(s)
 alias rbash='source ~/.bash_aliases'
+
+#sudo
+alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
+alias please='sudo $(fc -ln -1)'
 
 #system
 alias sleep="sudo systemctl suspend"
@@ -54,15 +23,19 @@ alias die="sudo shutdown -h now"
 #is executed as if it were the argument to the cd command
 shopt -s autocd
 
-#change directory
+#directories
+alias trash="cd ~/.local/share/Trash/files/"
 alias dev="cd ~/devel"
 alias repos="cd ~/devel/repos"
+alias ..="cd .."
+alias ....="cd .. && cd .."
+alias ......="cd .. && cd .. && cd .."
 
 #tree
 alias t='sudo tree'
 
-#generate 20 random chars
-alias getpass="openssl rand -base64 20"
+#generate 10 random chars
+alias pass="openssl rand -base64 11"
 
 #calculator
 alias calc='bc -l'
@@ -73,11 +46,7 @@ alias now='date +%T'
 #gnome-calendar
 alias calendar='run gnome-calendar'
 
-#intellij
-alias intellij='echo "Starting IntelliJ..." && 
-. ~/devel/idea-IU-183.5912.21/bin/idea.sh 2>/dev/null'
-
-#empty trash
+#trash
 alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
 
 #notes
@@ -90,6 +59,11 @@ alias bat="upower -i $(upower -e | grep 'BAT') | \
 grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
+#search word in file(s)
+findword() {
+    grep -nrw $1 -e $2
+}
+
 #note
 note() {
     local rand=$(openssl rand -base64 3)
@@ -101,9 +75,8 @@ note() {
 
 #compile and run cpp
 cpp() {
-    g++ -o output $1
-    chmod +x output
-    ./output $2
+    g++ -Wall -o compiled $1
+    chmod +x compiled
 }
 
 #redshift
@@ -147,7 +120,7 @@ o() {
         return 0
     fi
 
-    xdg-open $1 &>/dev/null
+    xdg-open "$1" &>/dev/null
 }
 
 #open url
@@ -155,7 +128,7 @@ chrome() {
     if [ -z $1 ]; then
         run chromium-browser
     else
-        xdg-open 'https://'$1 &>/dev/null
+        xdg-open 'https://'"$1" &>/dev/null
     fi
 }
 
@@ -198,4 +171,20 @@ copybash() {
 #expressen lunch
 express() {
     . ~/devel/repos/chalmers-lunch-cli/expressen.sh $1 $2 $3
+}
+
+# - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
+alias chalmers="cd ~/documents/chalmers/"
+alias vsport="echo $(cat ~/.config/Code/User/settings.json |
+    grep remote.port | sed 's/[^0-9]*//g')"
+
+sshchalmers() {
+    source ~/.secret
+    local PORT=$(cat ~/.config/Code/User/settings.json |
+        grep remote.port | sed 's/[^0-9]*//g')
+    ssh -R $PORT':localhost:'$PORT $SSH_CHALMERS
+}
+
+gitinspect() {
+    ~/devel/repos/gitinspector/gitinspector.py --grading $1
 }
