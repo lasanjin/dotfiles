@@ -58,6 +58,15 @@ alias nginxnotes="code ~/devel/repos/notes/code/NGINX.md"
 alias bat="upower -i $(upower -e | grep 'BAT') | \
 grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
+#kill
+alias kill='kill -9'
+
+#list ports in usek
+alias ports='sudo lsof -i -P -n'
+
+#change java version
+alias javas='sudo update-alternatives --config java'
+
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
 #search word in file(s)
 findword() {
@@ -66,17 +75,24 @@ findword() {
 
 #note
 note() {
-    local rand=$(openssl rand -base64 3)
-    local name='note-'$rand
+    local uniq=$(date '+%F:%N')
+    local name='note-'$uniq
     echo -e $(date +%F)'\n' >~/$name
     touch ~/$name
     xdg-open ~/$name 2>/dev/null
 }
 
 #compile and run cpp
-cpp() {
-    g++ -Wall -o compiled $1
-    chmod +x compiled
+gpp() {
+    g++ -Wall -o main $1
+    chmod +x main
+    ./main
+}
+
+#compile and run java
+jj() {
+    javac $1
+    java $(echo $1 | cut -f1 -d".")
 }
 
 #redshift
@@ -175,6 +191,9 @@ express() {
 
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
 alias chalmers="cd ~/documents/chalmers/"
+alias strukt="cd ~/documents/chalmers/TA/TDA417"
+alias funkis="cd ~/documents/chalmers/LP2/TDA452"
+alias distr="cd ~/documents/chalmers/LP2/TDA596"
 alias vsport="echo $(cat ~/.config/Code/User/settings.json |
     grep remote.port | sed 's/[^0-9]*//g')"
 
