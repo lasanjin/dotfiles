@@ -25,8 +25,8 @@ shopt -s autocd
 
 #directories
 alias trash="cd ~/.local/share/Trash/files/"
-alias dev="cd ~/devel"
-alias repos="cd ~/devel/repos"
+alias dev="cd ~/dev"
+alias repos="cd ~/dev/repos"
 alias ..="cd .."
 alias ....="cd .. && cd .."
 alias ......="cd .. && cd .. && cd .."
@@ -50,9 +50,9 @@ alias calendar='run gnome-calendar'
 alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
 
 #notes
-alias notes="code ~/devel/repos/notes/linux/LINUX.md"
-alias codenotes="code ~/devel/repos/notes/code/TOOLS.md"
-alias nginxnotes="code ~/devel/repos/notes/code/NGINX.md"
+alias notes="code ~/dev/repos/notes/linux/LINUX.md"
+alias codenotes="code ~/dev/repos/notes/code/TOOLS.md"
+alias nginxnotes="code ~/dev/repos/notes/code/NGINX.md"
 
 #battery
 alias bat="upower -i $(upower -e | grep 'BAT') | \
@@ -110,9 +110,9 @@ red() {
 blue() {
     if [ "$1" == "on" ] || [ "$1" == "off" ]; then
         local current_dir=$(pwd)
-        cd ~/../../etc/init.d/ && \ 
+        cd /etc/init.d/ &&
         sudo bluetooth "$1" &&
-            cd "$current_dir"
+        cd "$current_dir"
     else
         echo "Invalid input"
         return 0
@@ -166,8 +166,7 @@ google() {
 #clean dns
 cleandns() {
     local current_dir=$(pwd)
-    cd /etc/init.d/ &&
-        sudo service dns-clean start
+    cd /etc/init.d/ && sudo service dns-clean start
     cd "$current_dir"
 }
 
@@ -181,29 +180,15 @@ remove() {
 copybash() {
     sudo cp \
         -rf ~/.bash_aliases \
-        ~/devel/repos/dotfiles
+        ~/dev/repos/dotfiles
 }
 
 #expressen lunch
 express() {
-    . ~/devel/repos/chalmers-lunch-cli/expressen.sh $1 $2 $3
+    . ~/dev/repos/chalmers-lunch-cli/expressen.sh $1 $2 $3
 }
 
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
-alias chalmers="cd ~/documents/chalmers/"
-alias strukt="cd ~/documents/chalmers/TA/TDA417"
-alias funkis="cd ~/documents/chalmers/LP2/TDA452"
-alias distr="cd ~/documents/chalmers/LP2/TDA596"
-alias vsport="echo $(cat ~/.config/Code/User/settings.json |
-    grep remote.port | sed 's/[^0-9]*//g')"
-
-sshchalmers() {
-    source ~/.secret
-    local PORT=$(cat ~/.config/Code/User/settings.json |
-        grep remote.port | sed 's/[^0-9]*//g')
-    ssh -R $PORT':localhost:'$PORT $SSH_CHALMERS
-}
-
-gitinspect() {
-    ~/devel/repos/gitinspector/gitinspector.py --grading $1
-}
+alias ta="cd ~/Documents/chalmers/TA/TDA417"
+alias funkis="cd ~/Documents/chalmers/TDA452"
+alias distr="cd ~/Documents/chalmers/TDA596"
