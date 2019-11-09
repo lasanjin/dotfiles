@@ -46,8 +46,9 @@ alias now='date +%T'
 #gnome-calendar
 alias calendar='run gnome-calendar'
 
-#trash
+#clean
 alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
+alias cleanhistory="cat /dev/null > ~/.bash_history && history -c"
 
 #notes
 alias notes="code ~/dev/repos/notes/linux/LINUX.md"
@@ -93,6 +94,17 @@ gpp() {
 jj() {
     javac $1
     java $(echo $1 | cut -f1 -d".")
+}
+
+mouse() {
+    local re='^[+-]?[0-9]+([.][0-9]+)?$'
+    if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
+        local id=$(xinput \
+        | grep --color=never 'MX Master 2S.*pointer' \
+        | sed -e 's/.*id=//' \
+        | sed 's/\s.*$//')
+        xinput --set-prop $id "libinput Accel Speed" $1
+    fi
 }
 
 #redshift
