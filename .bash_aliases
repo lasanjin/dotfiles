@@ -32,7 +32,7 @@ alias repos="cd $repdir"
 #copy & paste output
 alias cv='xclip -selection clipboard -o'
 cp() {
-    $@ | xclip -selection clipboard 
+    $@ | xclip -selection clipboard
 }
 
 #tree
@@ -54,7 +54,6 @@ alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 
 #notes
 alias notes="cd $notesdir"
-alias cnotes="cd $repdir""notes/"
 
 #spell check single words
 alias spell='aspell -a'
@@ -97,8 +96,8 @@ note() {
     local name='note-'$uniq''
     local dir=$notesdir
     touch $dir$name
-    echo -e $(date +%F)'\n' > $dir$name
-    xdg-open $dir$name 2>/dev/null
+    echo -e $(date +%F)'\n' >$dir$name
+    o $dir$name
 }
 
 #compile and run cpp
@@ -118,10 +117,10 @@ jj() {
 mouse() {
     local re='^[+-]?[0-9]+([.][0-9]+)?$'
     if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
-        local id=$(xinput \
-        | grep --color=never "$mouse.*pointer" \
-        | sed -e 's/.*id=//' \
-        | sed 's/\s.*$//')
+        local id=$(xinput |
+            grep --color=never "$mouse.*pointer" |
+            sed -e 's/.*id=//' |
+            sed 's/\s.*$//')
         xinput --set-prop $id "libinput Accel Speed" $1
     fi
 }
@@ -142,8 +141,8 @@ blue() {
     if [ "$1" == "on" ] || [ "$1" == "off" ]; then
         local current_dir=$(pwd)
         cd /etc/init.d/ &&
-        sudo bluetooth "$1" &&
-        cd "$current_dir"
+            sudo bluetooth "$1" &&
+            cd "$current_dir"
     else
         echo "Invalid input"
         return 0
@@ -168,30 +167,6 @@ o() {
     fi
 
     xdg-open "$1" &>/dev/null
-}
-
-#open url
-chrome() {
-    if [ -z $1 ]; then
-        run chromium-browser
-    else
-        xdg-open 'https://'"$1" &>/dev/null
-    fi
-}
-
-#google search
-google() {
-    if [ -z $1 ]; then
-        echo "Invalid input"
-        return 0
-    else
-        local search=''
-        for i in $@; do
-            search="$search%20$i"
-        done
-        xdg-open 'http://www.google.com/search?q='$search \
-            &>/dev/null
-    fi
 }
 
 #clean dns
