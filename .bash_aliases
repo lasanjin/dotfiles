@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# - - - - - - - - - - - LOAD SECRETS - - - - - - - - - - - -
+source ~/.secrets
+
 # - - - - - - - - - - - KEYS - - - - - - - - - - - -
 # Ctrl+left/right  arrow
 bind '"\e[1;5D" backward-word'
@@ -8,7 +11,6 @@ bind '"\e[1;5C" forward-word'
 # - - - - - - - - - - - ALIASES - - - - - - - - - - - -
 #bash files
 alias codealias='code ~/.bash_aliases'
-alias codebash='code ~/.bashrc'
 alias rbash='source ~/.bash_aliases'
 
 #sudo
@@ -19,17 +21,19 @@ alias please='sudo $(fc -ln -1)'
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 
-#A command name that is the name of a directory
-#is executed as if it were the argument to the cd command
+#No need for cd
 shopt -s autocd
 
 #directories
 alias trash="cd ~/.local/share/Trash/files/"
 alias dev="cd ~/dev"
-alias repos="cd ~/dev/repos"
-alias ..="cd .."
-alias ....="cd .. && cd .."
-alias ......="cd .. && cd .. && cd .."
+alias repos="cd $repdir"
+
+#copy & paste output
+alias cv='xclip -selection clipboard -o'
+cp() {
+    $@ | xclip -selection clipboard 
+}
 
 #tree
 alias t='sudo tree'
@@ -40,20 +44,20 @@ alias pass="openssl rand -base64 11"
 #calculator
 alias calc='bc -l'
 
-#time
+#time & date
 alias now='date +%T'
-
-#gnome-calendar
 alias calendar='run gnome-calendar'
 
-#clean
-alias cleantrash="sudo rm -rf ~/.local/share/Trash/files*"
-alias cleanhistory="cat /dev/null > ~/.bash_history && history -c"
+#clean trash & history
+alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
+alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 
 #notes
-alias notes="code ~/dev/repos/notes/linux/LINUX.md"
-alias codenotes="code ~/dev/repos/notes/code/TOOLS.md"
-alias nginxnotes="code ~/dev/repos/notes/code/NGINX.md"
+alias notes="cd $notesdir"
+alias cnotes="cd $repdir""notes/"
+
+#spell check single words
+alias spell='aspell -a'
 
 #battery
 alias bat="upower -i $(upower -e | grep 'BAT') | \
@@ -69,18 +73,32 @@ alias ports='sudo lsof -i -P -n'
 alias javas='sudo update-alternatives --config java'
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
-#search word in file(s)
+#volume form main sound and the HDMI
+sound() {
+    if [ "$1" == "on" ]; then
+        amixer -q -D pulse sset Master on
+    elif [ "$1" == "off" ]; then
+        amixer -q -D pulse sset Master off
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 0 ] && [ $1 -le 100 ]; then
+        amixer -q -D pulse sset Master $1%
+    else
+        echo "Invalid input"
+    fi
+}
+
+#search word ($2) in file ($1)
 findword() {
-    grep -nrw $1 -e $2
+    grep -nrw $2 -e $1
 }
 
 #note
 note() {
-    local uniq=$(date '+%F:%N')
-    local name='note-'$uniq
-    echo -e $(date +%F)'\n' >~/$name
-    touch ~/$name
-    xdg-open ~/$name 2>/dev/null
+    local uniq=$(date '+%F-%N')
+    local name='note-'$uniq''
+    local dir=$notesdir
+    touch $dir$name
+    echo -e $(date +%F)'\n' > $dir$name
+    xdg-open $dir$name 2>/dev/null
 }
 
 #compile and run cpp
@@ -96,11 +114,12 @@ jj() {
     java $(echo $1 | cut -f1 -d".")
 }
 
+#change mouse sensitivity
 mouse() {
     local re='^[+-]?[0-9]+([.][0-9]+)?$'
     if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
         local id=$(xinput \
-        | grep --color=never 'MX Master 2S.*pointer' \
+        | grep --color=never "$mouse.*pointer" \
         | sed -e 's/.*id=//' \
         | sed 's/\s.*$//')
         xinput --set-prop $id "libinput Accel Speed" $1
@@ -136,7 +155,7 @@ screen() {
     if [ -z $1 ]; then
         echo "Invalid input"
     elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ] && [ $1 -le 100 ]; then
-        param=$(bc <<<"scale=2; $1/100")
+        local param=$(bc <<<"scale=2; $1/100")
         xrandr --output DP-2 --brightness $param
     fi
 }
@@ -190,17 +209,15 @@ remove() {
 
 #copy bash files
 copybash() {
-    sudo cp \
-        -rf ~/.bash_aliases \
-        ~/dev/repos/dotfiles
+    sudo cp -rf ~/.bash_aliases "$repdir"dotfiles
 }
 
 #expressen lunch
 express() {
-    . ~/dev/repos/chalmers-lunch-cli/expressen.sh $1 $2 $3
+    . "$repdir"chalmers-lunch-cli/expressen.sh $1 $2 $3
 }
 
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
-alias ta="cd ~/Documents/chalmers/TA/TDA417"
-alias funkis="cd ~/Documents/chalmers/TDA452"
-alias distr="cd ~/Documents/chalmers/TDA596"
+alias ta="cd $tadir"
+alias funkis="cd $funkdir"
+alias distr="cd $distrdir"
