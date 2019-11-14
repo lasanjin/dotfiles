@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# - - - - - - - - - - - LOAD SECRETS - - - - - - - - - - - -
-source ~/.secrets
+# - - - - - - - - - - - LOAD PATHS etc. - - - - - - - - - - - -
+source ~/.miscellaneous
 
 # - - - - - - - - - - - KEYS - - - - - - - - - - - -
 # Ctrl+left/right  arrow
@@ -63,7 +63,7 @@ alias bat="upower -i $(upower -e | grep 'BAT') | \
 grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 
 #kill
-alias kill='kill -9'
+alias kill='sudo kill -9'
 
 #list ports in usek
 alias ports='sudo lsof -i -P -n'
@@ -78,16 +78,35 @@ sound() {
         amixer -q -D pulse sset Master on
     elif [ "$1" == "off" ]; then
         amixer -q -D pulse sset Master off
-    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 0 ] && [ $1 -le 100 ]; then
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 0 ] && [ $1 -le 150 ]; then
         amixer -q -D pulse sset Master $1%
     else
         echo "Invalid input"
     fi
 }
 
-#search word ($2) in file ($1)
+#search word ($1) in file ($2)
 findword() {
-    grep -nrw $2 -e $1
+    grep -nrw $1 -e $2
+}
+
+#search filename ($1) in directory ($2) with maxdepth ($3)
+findfile() {
+    if [ -z "$1" ]; then
+        echo "Invalid input"
+    elif [ "$2" == "." ]; then
+        find . -maxdepth 1 -iname "*$1*"
+    elif ! [ -z "$2" ]; then
+        if [ "$3" == "." ]; then
+            find $2 -maxdepth 1 -iname "*$1*"
+        elif [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
+            find $2 -maxdepth $3 -iname "*$1*"
+        else 
+            find $2 -iname "*$1*"
+        fi
+    else
+        find . -iname "*$1*"
+    fi
 }
 
 #note
@@ -110,7 +129,7 @@ gpp() {
 #compile and run java
 jj() {
     javac $1
-    java $(echo $1 | cut -f1 -d".")
+    java $(echo $1 | cut -f1 -d".") ${@:2:1}
 }
 
 #change mouse sensitivity
@@ -190,6 +209,12 @@ copybash() {
 #expressen lunch
 express() {
     . "$repdir"chalmers-lunch-cli/expressen.sh $1 $2 $3
+}
+
+pi() {
+    if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ]; then
+        python -c "from mpmath import mp; mp.dps=$1; print mp.pi"
+    fi
 }
 
 # - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
