@@ -30,8 +30,8 @@ alias dev="cd ~/dev"
 alias repos="cd $repdir"
 
 #copy & paste output
-alias cv='xclip -selection clipboard -o'
-cp() {
+alias pasteo='xclip -selection clipboard -o'
+copyo() {
     $@ | xclip -selection clipboard
 }
 
@@ -55,7 +55,7 @@ alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #notes
 alias notes="cd $notesdir"
 
-#spell check single words
+#spellcheck single words
 alias spell='aspell -a'
 
 #battery
@@ -86,12 +86,12 @@ sound() {
 }
 
 #search word ($1) in file ($2)
-findword() {
+fwords() {
     grep -nrw $1 -e $2
 }
 
 #search filename ($1) in directory ($2) with maxdepth ($3)
-findfile() {
+ffiles() {
     if [ -z "$1" ]; then
         echo "Invalid input"
     elif [ "$2" == "." ]; then
@@ -101,7 +101,7 @@ findfile() {
             find $2 -maxdepth 1 -iname "*$1*"
         elif [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
             find $2 -maxdepth $3 -iname "*$1*"
-        else 
+        else
             find $2 -iname "*$1*"
         fi
     else
@@ -129,7 +129,7 @@ gpp() {
 #compile and run java
 jj() {
     javac $1
-    java $(echo $1 | cut -f1 -d".") ${@:2:1}
+    java $(echo $1 | cut -f1 -d".") ${@:2}
 }
 
 #change mouse sensitivity
