@@ -86,12 +86,13 @@ sound() {
 }
 
 #search word ($1) in file ($2)
-fwords() {
-    grep -nrw $1 -e $2
+findw() {
+    # TODO: fix + add case-sensitive option
+    grep -rnw "$3" "$2" -e "$1"
 }
 
 #search filename ($1) in directory ($2) with maxdepth ($3)
-ffiles() {
+findf() {
     if [ -z "$1" ]; then
         echo "Invalid input"
     elif [ "$2" == "." ]; then
@@ -111,6 +112,7 @@ ffiles() {
 
 #note
 note() {
+    # TODO: replace uniq with ordered number notes / day
     local uniq=$(date '+%F-%N')
     local name='note-'$uniq''
     local dir=$notesdir
