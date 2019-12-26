@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# - - - - - - - - - - - LOAD PATHS etc. - - - - - - - - - - - -
+# - - - - - - - - LOAD PATHS, VARIABLES... - - - - - - - - -
 source ~/.miscellaneous
 
 # - - - - - - - - - - - KEYS - - - - - - - - - - - -
@@ -9,67 +9,55 @@ bind '"\e[1;5D" backward-word'
 bind '"\e[1;5C" forward-word'
 
 # - - - - - - - - - - - ALIASES - - - - - - - - - - - -
-#bash files
-alias codealias='code ~/.bash_aliases'
-alias rbash='source ~/.bash_aliases'
-
-#sudo
-alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
-alias please='sudo $(fc -ln -1)'
-
-#system
+# - - - system - - -
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
-
+alias kill='sudo kill -9'
+# redo cmd in sudo
+alias pls='sudo $(fc -ln -1)'
+#battery
+alias bat="upower -i $(upower -e | grep 'BAT') | \
+grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
+#list ports in usek
+alias ports='sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
-
+#edit bash files
+alias codealias='code ~/.bash_aliases'
+alias rbash='source ~/.bash_aliases'
 #directories
 alias trash="cd ~/.local/share/Trash/files/"
 alias dev="cd ~/dev"
 alias repos="cd $repdir"
+alias notes="cd $notesdir"
+alias ta="cd $tadir"
+alias funkis="cd $funkdir"
+alias distr="cd $distrdir"
 
+# - - - miscellaneous - - -
+#tree
+alias t='sudo tree'
+#generate 10 random chars
+alias pass="openssl rand -base64 11"
+#calculator
+alias calc='bc -l'
+#time & date
+alias now='date +%T'
+alias calendar='run gnome-calendar'
+#sudo vscode
+alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
+#spellcheck single words
+alias spell='aspell -a'
+#clean trash & history
+alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
+alias cleanh="cat /dev/null > ~/.bash_history && history -c"
+#change java version
+alias javas='sudo update-alternatives --config java'
 #copy & paste output
 alias pasteo='xclip -selection clipboard -o'
 copyo() {
     $@ | xclip -selection clipboard
 }
-
-#tree
-alias t='sudo tree'
-
-#generate 10 random chars
-alias pass="openssl rand -base64 11"
-
-#calculator
-alias calc='bc -l'
-
-#time & date
-alias now='date +%T'
-alias calendar='run gnome-calendar'
-
-#clean trash & history
-alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
-alias cleanh="cat /dev/null > ~/.bash_history && history -c"
-
-#notes
-alias notes="cd $notesdir"
-
-#spellcheck single words
-alias spell='aspell -a'
-
-#battery
-alias bat="upower -i $(upower -e | grep 'BAT') | \
-grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
-
-#kill
-alias kill='sudo kill -9'
-
-#list ports in usek
-alias ports='sudo lsof -i -P -n'
-
-#change java version
-alias javas='sudo update-alternatives --config java'
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
 #volume form main sound and the HDMI
@@ -128,7 +116,7 @@ gpp() {
     ./main
 }
 
-#compile and run java
+#compile and run java with params
 jj() {
     javac $1
     java $(echo $1 | cut -f1 -d".") ${@:2}
@@ -136,7 +124,7 @@ jj() {
 
 #change mouse sensitivity
 mouse() {
-    local re='^[+-]?[0-9]+([.][0-9]+)?$'
+    local re='^[+-]?[0-9]+([.][0-9]+)?$' #pos/neg decimals
     if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
         local id=$(xinput |
             grep --color=never "$mouse.*pointer" |
@@ -213,13 +201,9 @@ express() {
     . "$repdir"chalmers-lunch-cli/expressen.sh $1 $2 $3
 }
 
+#amazing pi calc
 pi() {
     if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ]; then
         python -c "from mpmath import mp; mp.dps=$1; print mp.pi"
     fi
 }
-
-# - - - - - - - - - - - CHALMERS - - - - - - - - - - - -
-alias ta="cd $tadir"
-alias funkis="cd $funkdir"
-alias distr="cd $distrdir"
