@@ -1,2 +1,2 @@
-# Dotfiles
-Shortcuts, commands and functions for current OS, Linux Mint
+## Dotfiles & scripts
+Shortcuts, commands and script on current OS, Linux Mint
