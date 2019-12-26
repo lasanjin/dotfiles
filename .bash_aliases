@@ -60,7 +60,7 @@ copyo() {
 }
 
 # - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
-#volume form main sound and the HDMI
+#volume: main sound & HDMI
 sound() {
     if [ "$1" == "on" ]; then
         amixer -q -D pulse sset Master on
@@ -124,7 +124,7 @@ jj() {
 
 #change mouse sensitivity
 mouse() {
-    local re='^[+-]?[0-9]+([.][0-9]+)?$' #pos/neg decimals
+    local re='^[+-]?[0-9]+([.][0-9]+)?$'
     if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
         local id=$(xinput |
             grep --color=never "$mouse.*pointer" |
