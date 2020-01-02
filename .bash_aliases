@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# - - - - - - - - LOAD PATHS, VARIABLES... - - - - - - - - -
+# - - - LOAD PATHS, VARIABLES etc. - - -
 source ~/.miscellaneous
 
-# - - - - - - - - - - - KEYS - - - - - - - - - - - -
-# Ctrl+left/right  arrow
+# - - - KEYS - - -
+#ctrl+left/right+arrow
 bind '"\e[1;5D" backward-word'
 bind '"\e[1;5C" forward-word'
 
-# - - - - - - - - - - - ALIASES - - - - - - - - - - - -
-# - - - system - - -
+#- - - ALIASES - - -
+# SYSTEM
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
-# redo cmd in sudo
+#redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #battery
 alias bat="upower -i $(upower -e | grep 'BAT') | \
@@ -34,16 +34,13 @@ alias ta="cd $tadir"
 alias funkis="cd $funkdir"
 alias distr="cd $distrdir"
 
-# - - - miscellaneous - - -
+# MISCELLANEOUS
 #tree
 alias t='sudo tree'
 #generate 10 random chars
 alias pass="openssl rand -base64 11"
-#calculator
-alias calc='bc -l'
 #time & date
 alias now='date +%T'
-alias calendar='run gnome-calendar'
 #sudo vscode
 alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
@@ -54,12 +51,14 @@ alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #change java version
 alias javas='sudo update-alternatives --config java'
 #copy & paste output
-alias pasteo='xclip -selection clipboard -o'
-copyo() {
+alias po='xclip -selection clipboard -o'
+
+#- - - FUNCTIONS - - -
+#copy cmd output
+co() {
     $@ | xclip -selection clipboard
 }
 
-# - - - - - - - - - - - FUNCTIONS - - - - - - - - - - - -
 #volume: main sound & HDMI
 sound() {
     if [ "$1" == "on" ]; then
@@ -100,13 +99,21 @@ findf() {
 
 #note
 note() {
-    # TODO: replace uniq with ordered number notes / day
-    local uniq=$(date '+%F-%N')
-    local name='note-'$uniq''
-    local dir=$notesdir
-    touch $dir$name
-    echo -e $(date +%F)'\n' >$dir$name
-    o $dir$name
+    # local uniq=$(date '+%N')
+    local date=$(date '+%F')
+    local f='note-'$date'-'
+    local fs=$notesdir$f*
+    local tail
+    if ls -U $fs &>/dev/null; then
+        tail=$(ls $fs | sort -n -t - -k 2 | tail -1 | sed 's/.*\-//')
+        ((tail++))
+    else
+        tail='1'
+    fi
+    local name=$f$tail
+    touch $notesdir$name
+    echo -e $date'\n' >$notesdir$name
+    o $notesdir$name
 }
 
 #compile and run cpp
@@ -174,7 +181,6 @@ o() {
         echo "Invalid input"
         return 0
     fi
-
     xdg-open "$1" &>/dev/null
 }
 
