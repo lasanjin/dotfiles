@@ -9,7 +9,6 @@ bind '"\e[1;5D" backward-word'
 bind '"\e[1;5C" forward-word'
 
 #- - - ALIASES - - -
-# SYSTEM
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
@@ -33,8 +32,6 @@ alias notes="cd $notesdir"
 alias ta="cd $tadir"
 alias funkis="cd $funkdir"
 alias distr="cd $distrdir"
-
-# MISCELLANEOUS
 #tree
 alias t='sudo tree'
 #generate 10 random chars
@@ -50,10 +47,12 @@ alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #change java version
 alias javas='sudo update-alternatives --config java'
+#change python version
+alias pythons='sudo update-alternatives --config python'
 #copy & paste output
 alias po='xclip -selection clipboard -o'
 
-#- - - FUNCTIONS - - -
+#- - - SCRIPTS - - -
 #copy cmd output
 co() {
     $@ | xclip -selection clipboard
@@ -73,27 +72,28 @@ sound() {
 }
 
 #search word ($1) in file ($2)
+# ${@:3} additional params, e.g. ignore case: -i
 findw() {
-    # TODO: fix + add case-sensitive option
-    grep -rnw "$3" "$2" -e "$1"
+    grep -rnw ${@:3} "$2" -e "$1"
 }
 
 #search filename ($1) in directory ($2) with maxdepth ($3)
+# ${@:X} additional params, e.g. -delete
 findf() {
     if [ -z "$1" ]; then
         echo "Invalid input"
     elif [ "$2" == "." ]; then
-        find . -maxdepth 1 -iname "*$1*"
-    elif ! [ -z "$2" ]; then
+        find . -maxdepth 1 -iname "*$1*" ${@:3}
+    elif [[ "$2" == *"/"* ]]; then
         if [ "$3" == "." ]; then
-            find $2 -maxdepth 1 -iname "*$1*"
+            find $2 -maxdepth 1 -iname "*$1*" ${@:3}
         elif [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
-            find $2 -maxdepth $3 -iname "*$1*"
+            find $2 -maxdepth $3 -iname "*$1*" ${@:4}
         else
-            find $2 -iname "*$1*"
+            find $2 -iname "*$1*" ${@:3}
         fi
     else
-        find . -iname "*$1*"
+        find -iname "*$1*" ${@:2}
     fi
 }
 
@@ -125,8 +125,10 @@ gpp() {
 
 #compile and run java with params
 jj() {
-    javac $1
-    java $(echo $1 | cut -f1 -d".") ${@:2}
+    local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
+    local path=$(echo $1 | sed "s/"$f".*//")
+    javac -cp $path $1
+    java -cp $path $f ${@:2}
 }
 
 #change mouse sensitivity
