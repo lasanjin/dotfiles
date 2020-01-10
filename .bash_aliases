@@ -58,6 +58,14 @@ co() {
     $@ | xclip -selection clipboard
 }
 
+#git status -$1 for all repositories in $repdir
+gs() {
+    find $repdir -maxdepth 2 -name ".git" \
+        -execdir sh -c '(echo "\033[94m"${PWD##*/}"\033[0m")' \; \
+        -execdir git status $@ \; \
+        -exec echo \;
+}
+
 #volume: main sound & HDMI
 sound() {
     if [ "$1" == "on" ]; then
@@ -128,7 +136,7 @@ jj() {
     local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
     local path=$(echo $1 | sed "s/"$f".*//")
     javac -cp $path $1
-    java -cp $path $f ${@:2}
+    java -cp $path $f ${@:2} | sed "s@.*/@@" | cut -f1 -d"." -
 }
 
 #change mouse sensitivity
