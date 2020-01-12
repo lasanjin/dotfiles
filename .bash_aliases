@@ -1,14 +1,20 @@
 #!/bin/bash
 
-# - - - LOAD PATHS, VARIABLES etc. - - -
+# ----------------------------------------------------------------------
+# LOAD PATHS, VARIABLES etc.
+# ----------------------------------------------------------------------
 source ~/.miscellaneous
 
-# - - - KEYS - - -
+# ----------------------------------------------------------------------
+# KEYS
+# ----------------------------------------------------------------------
 #ctrl+left/right+arrow
 bind '"\e[1;5D" backward-word'
 bind '"\e[1;5C" forward-word'
 
-#- - - ALIASES - - -
+# ----------------------------------------------------------------------
+# ALIASES
+# ----------------------------------------------------------------------
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
@@ -57,7 +63,9 @@ alias n='spotify next'
 alias p='spotify prev'
 alias stop='spotify stop'
 
-#- - - SCRIPTS - - -
+# ----------------------------------------------------------------------
+# SCRIPTS
+# ----------------------------------------------------------------------
 #copy cmd output
 co() {
     $@ | xclip -selection clipboard
@@ -140,8 +148,8 @@ gpp() {
 jj() {
     local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
     local path=$(echo $1 | sed "s/"$f".*//")
-    javac -cp $path $1
-    java -cp $path $f ${@:2} | sed "s@.*/@@" | cut -f1 -d"." -
+    javac -cp "$path" $1
+    java -cp "$path" $f ${@:2}
 }
 
 #change mouse sensitivity
