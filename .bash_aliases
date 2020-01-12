@@ -21,8 +21,8 @@ grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 alias ports='sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
-#edit bash files
-alias codealias='code ~/.bash_aliases'
+#bash files
+alias cbash='code ~/.bash_aliases'
 alias rbash='source ~/.bash_aliases'
 #directories
 alias trash="cd ~/.local/share/Trash/files/"
@@ -34,23 +34,28 @@ alias funkis="cd $funkdir"
 alias distr="cd $distrdir"
 #tree
 alias t='sudo tree'
-#generate 10 random chars
+#gen 10 random chars
 alias pass="openssl rand -base64 11"
-#time & date
+#time
 alias now='date +%T'
 #sudo vscode
-alias sudocode='sudo code --user-data-dir="~/.vscode-root"'
+alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
 alias spell='aspell -a'
 #clean trash & history
 alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
-#change java version
+#java versions
 alias javas='sudo update-alternatives --config java'
-#change python version
+#python versions
 alias pythons='sudo update-alternatives --config python'
-#copy & paste output
+#paste clipboard
 alias po='xclip -selection clipboard -o'
+#spotify
+alias pp='spotify pp'
+alias n='spotify next'
+alias p='spotify prev'
+alias stop='spotify stop'
 
 #- - - SCRIPTS - - -
 #copy cmd output
@@ -58,7 +63,7 @@ co() {
     $@ | xclip -selection clipboard
 }
 
-#git status -$1 for all repositories in $repdir
+#git status -$@ for all repositories in $repdir
 gs() {
     find $repdir -maxdepth 2 -name ".git" \
         -execdir sh -c '(echo "\033[94m"${PWD##*/}"\033[0m")' \; \
@@ -85,8 +90,8 @@ findw() {
     grep -rnw ${@:3} "$2" -e "$1"
 }
 
-#search filename ($1) in directory ($2) with maxdepth ($3)
-# ${@:X} additional params, e.g. -delete
+#search fname ($1) in dir ($2) with maxdepth ($3)
+# ${@:X} params, e.g. -delete
 findf() {
     if [ -z "$1" ]; then
         echo "Invalid input"
@@ -105,20 +110,20 @@ findf() {
     fi
 }
 
-#note
+#create & open note-yyyy-mm-dd-seq#
 note() {
     # local uniq=$(date '+%N')
     local date=$(date '+%F')
     local f='note-'$date'-'
     local fs=$notesdir$f*
-    local tail
+    local seq
     if ls -U $fs &>/dev/null; then
-        tail=$(ls $fs | sort -n -t - -k 2 | tail -1 | sed 's/.*\-//')
-        ((tail++))
+        seq=$(ls $fs | sort -n -t - -k 2 | tail -1 | sed 's/.*\-//')
+        ((seq++))
     else
-        tail='1'
+        seq='1'
     fi
-    local name=$f$tail
+    local name=$f$seq
     touch $notesdir$name
     echo -e $date'\n' >$notesdir$name
     o $notesdir$name
@@ -222,4 +227,28 @@ pi() {
     if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ]; then
         python -c "from mpmath import mp; mp.dps=$1; print mp.pi"
     fi
+}
+
+spotify() {
+    CMD="dbus-send --print-reply=literal \
+    --dest=org.mpris.MediaPlayer2.spotify \
+    /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player"
+
+    case "$1" in
+    "pp")
+        ${CMD}.PlayPause
+        ;;
+    "next")
+        ${CMD}.Next
+        ;;
+    "prev")
+        ${CMD}.Previous
+        ;;
+    "stop")
+        ${CMD}.Stop
+        ;;
+    *)
+        echo "Invalid input"
+        ;;
+    esac
 }
