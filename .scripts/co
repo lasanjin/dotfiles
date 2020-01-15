@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#copy cmd output
+co() {
+    $@ | xclip -selection clipboard
+}

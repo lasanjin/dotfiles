@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#search word ($1) in file ($2)
+# ${@:3} additional params, e.g. ignore case: -i
+findw() {
+    grep -rnw ${@:3} "$2" -e "$1"
+}

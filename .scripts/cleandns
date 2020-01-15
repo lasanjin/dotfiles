@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#clean dns
+cleandns() {
+    local current_dir=$(pwd)
+    cd /etc/init.d/ && sudo service dns-clean start
+    cd "$current_dir"
+}

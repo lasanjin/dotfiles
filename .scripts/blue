@@ -1,0 +1,14 @@
+#!/bin/bash
+
+blue() {
+    if [ "$1" == "on" ] || [ "$1" == "off" ]; then
+        local current_dir=$(pwd)
+        cd /etc/init.d/ &&
+            sudo bluetooth "$1" &&
+            cd "$current_dir"
+    else
+        echo "Invalid input"
+        return 0
+    fi
+}
+#export -f blue # enables func call from scripts

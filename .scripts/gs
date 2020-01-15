@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#git status -$@ for all repositories in $repdir
+gs() {
+    find $repdir -maxdepth 2 -name ".git" \
+        -execdir sh -c '(echo "\033[94m"${PWD##*/}"\033[0m")' \; \
+        -execdir git status $@ \; \
+        -exec echo \;
+}

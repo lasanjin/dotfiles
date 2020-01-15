@@ -1,0 +1,11 @@
+#!/bin/bash
+
+red() {
+    if [ "$1" == "stop" ]; then
+        redshift -x &>/dev/null
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
+        redshift -O $(($1 * 100)) &>/dev/null
+    else
+        echo "Invalid input"
+    fi
+}

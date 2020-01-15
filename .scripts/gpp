@@ -1,0 +1,8 @@
+#!/bin/bash
+
+#compile and run cpp
+gpp() {
+    g++ -Wall -o main $1
+    chmod +x main
+    ./main
+}

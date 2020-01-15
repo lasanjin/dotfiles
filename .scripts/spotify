@@ -1,0 +1,25 @@
+#!/bin/bash
+
+spotify() {
+    CMD="dbus-send --print-reply=literal \
+    --dest=org.mpris.MediaPlayer2.spotify \
+    /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player"
+
+    case "$1" in
+    "pp")
+        ${CMD}.PlayPause
+        ;;
+    "next")
+        ${CMD}.Next
+        ;;
+    "prev")
+        ${CMD}.Previous
+        ;;
+    "stop")
+        ${CMD}.Stop
+        ;;
+    *)
+        echo "Invalid input"
+        ;;
+    esac
+}

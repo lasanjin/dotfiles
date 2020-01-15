@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#open
+o() {
+    if [ -z "$1" ]; then
+        echo "Invalid input"
+        return 0
+    fi
+    xdg-open "$1" &>/dev/null
+}

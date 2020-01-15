@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#create & open note-yyyy-mm-dd-seq#
+note() {
+    # local uniq=$(date '+%N')
+    local date=$(date '+%F')
+    local f='note-'$date'-'
+    local fs=$notesdir$f*
+    local seq
+    if ls -U $fs &>/dev/null; then
+        seq=$(ls $fs | sort -n -t - -k 2 | tail -1 | sed 's/.*\-//')
+        ((seq++))
+    else
+        seq='1'
+    fi
+    local name=$f$seq
+    touch $notesdir$name
+    echo -e $date'\n' >$notesdir$name
+    o $notesdir$name
+}

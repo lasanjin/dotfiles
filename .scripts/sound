@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#volume: main sound & HDMI
+sound() {
+    if [ "$1" == "on" ]; then
+        amixer -q -D pulse sset Master on
+    elif [ "$1" == "off" ]; then
+        amixer -q -D pulse sset Master off
+    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 0 ] && [ $1 -le 150 ]; then
+        amixer -q -D pulse sset Master $1%
+    else
+        echo "Invalid input"
+    fi
+}

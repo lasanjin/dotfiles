@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#search word ($1) in file ($2)
+# ${@:3} additional params, e.g. ignore case: -i
+findw() {
+    grep -rnw ${@:3} "$2" -e "$1"
+}
+
+#search fname ($1) in dir ($2) with maxdepth ($3)
+# ${@:X} params, e.g. -delete
+findf() {
+    if [ -z "$1" ]; then
+        echo "Invalid input"
+    elif [ "$2" == "." ]; then
+        sudo find . -maxdepth 1 -iname "*$1*" ${@:3}
+    elif [[ "$2" == *"/"* ]]; then
+        if [ "$3" == "." ]; then
+            sudo find $2 -maxdepth 1 -iname "*$1*" ${@:3}
+        elif [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
+            sudo find $2 -maxdepth $3 -iname "*$1*" ${@:4}
+        else
+            sudo find $2 -iname "*$1*" ${@:3}
+        fi
+    else
+        sudo find -iname "*$1*" ${@:2}
+    fi
+}

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#compile and run java with params
+jj() {
+    local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
+    local path=$(echo $1 | sed "s/"$f".*//")
+    javac -cp "$path" $1
+    java -cp "$path" $f ${@:2}
+}
