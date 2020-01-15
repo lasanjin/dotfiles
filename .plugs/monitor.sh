@@ -3,7 +3,7 @@
 read STATUS </sys/class/drm/card0/card0-DP-2/status
 
 if [ "$STATUS" == "connected" ]; then
-    . ~/.scripts/blue && blue on
+    . /home/lasanjin/.scripts/blue && blue on
 else
-    . ~/.scripts/blue && blue off
+    . /home/lasanjin/.scripts/blue && blue off
 fi
