@@ -1,1 +1,1 @@
-KERNEL=="card0" SUBSYSTEM=="drm", RUN+="/home/lasanjin/.scripts/hotplug-monitor"
+KERNEL=="card0" SUBSYSTEM=="drm", RUN+="/home/lasanjin/.plugs/monitor"
