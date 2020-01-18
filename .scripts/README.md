@@ -1,0 +1,43 @@
+## Scripts
+
+ - [mouse](mouse)
+   - Change mouse sensitivity `$1`
+ - [pi](pi)
+   - Output `$1` number of pi decimals 
+   - Python library [mpmath](http://mpmath.org/)
+ - [save](save)
+   - Copy bash aliases, scripts etc.
+ - [remove](remove)
+   - Uninstall application `$1`
+ - [cdns](cdns)
+   - Flush DNS cache
+ - [red](red)
+   - Adjusts color temperature `$1` of screen with Redshift
+ - [o](o)
+   - Open file `$1`
+ - [findw](findw)
+   - Search word `$1` in file `$2`
+   - `${@:3}` additional params, e.g. ignore case: `-i`
+ - [sound](sound)
+   - Adjust sound volume `$1`
+ - [screen](screen)
+   - Adjust screen brightness `$1`
+ - [blue](blue)
+   - Turn on/off bluetooth
+ - [note](note)
+   - Create & open note-yyyy-mm-dd-seq#
+ - [spotify](spotify)
+   - Control Spotify
+ - [co](co)
+   - Copy cmd output
+ - [gpp](gpp)
+   - Compile & run C++
+ - [jj](jj)
+   - Compile & run Java
+ - [gs](gs)
+   - Run [Github traffic](https://github.com/lasanjin/github-traffic) script
+ - [express](express)
+   - Run [expressen](https://github.com/lasanjin/chalmers-lunch-cli) script
+ - [findf](findf)
+   - Search fname `$1` in dir `$2` with maxdepth `$3`
+   - `${@:X}` params, e.g. `-delete`

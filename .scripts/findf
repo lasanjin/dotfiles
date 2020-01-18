@@ -1,11 +1,5 @@
 #!/bin/bash
 
-#search word ($1) in file ($2)
-# ${@:3} additional params, e.g. ignore case: -i
-findw() {
-    grep -rnw ${@:3} "$2" -e "$1"
-}
-
 #search fname ($1) in dir ($2) with maxdepth ($3)
 # ${@:X} params, e.g. -delete
 findf() {

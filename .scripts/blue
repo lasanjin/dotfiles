@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#bluetooth
 blue() {
     if [ "$1" == "on" ] || [ "$1" == "off" ]; then
         local current_dir=$(pwd)
