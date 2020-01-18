@@ -1,1 +1,1 @@
-KERNEL=="card0", SUBSYSTEM=="drm", RUN+="/home/lasanjin/.plugs/monitor.sh"
+KERNEL=="card0", SUBSYSTEM=="drm", RUN+="/home/lasanjin/.plugs/monitor"
