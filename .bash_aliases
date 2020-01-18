@@ -33,7 +33,7 @@ alias ports='sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
 #bash files
-alias cbash='code ~/.bash_aliases'
+alias cbash='code -n ~/.bash_aliases ~/.scripts/ ~/.rules/ ~/.plugs/'
 alias rbash='source ~/.bash_aliases'
 #directories
 alias trash="cd ~/.local/share/Trash/files/"
