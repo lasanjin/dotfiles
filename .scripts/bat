@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#battery status
+bat() {
+    if [ "$1" == "m" ]; then #mouse
+        param='mouse_dev'
+    elif [ "$1" == "k" ]; then #keyboard
+        param='mouse_hid'
+    else
+        param='BAT'
+    fi
+    upower -i $(upower -e | grep $param) | grep 'time\|percentage' | sed -e 's/[^0-9]*//'
+}

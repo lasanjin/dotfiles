@@ -26,9 +26,6 @@ alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
-#battery
-alias bat="upower -i $(upower -e | grep 'BAT') | \
-grep --color=never 'time\|percentage' | sed -e 's/[^0-9]*//'"
 #list ports in usek
 alias ports='sudo lsof -i -P -n'
 #No need for cd

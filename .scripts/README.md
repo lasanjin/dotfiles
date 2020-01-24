@@ -15,6 +15,9 @@
    - Adjusts color temperature `$1` of screen with Redshift
  - [o](o)
    - Open file `$1`
+ - [findf](findf)
+   - Search fname `$1` in dir `$2` with maxdepth `$3`
+   - `${@:X}` params, e.g. `-delete`
  - [findw](findw)
    - Search word `$1` in file `$2`
    - `${@:3}` additional params, e.g. ignore case: `-i`
@@ -38,6 +41,5 @@
    - Run [Github traffic](https://github.com/lasanjin/github-traffic) script
  - [express](express)
    - Run [expressen](https://github.com/lasanjin/chalmers-lunch-cli) script
- - [findf](findf)
-   - Search fname `$1` in dir `$2` with maxdepth `$3`
-   - `${@:X}` params, e.g. `-delete`
+ - [bat](bat)
+   - Battery status
