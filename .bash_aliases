@@ -8,7 +8,7 @@ source ~/.miscellaneous
 # ----------------------------------------------------------------------
 # LOAD SCRIPTS
 # ----------------------------------------------------------------------
-for f in ~/.scripts/*; do chmod +x $f && source $f; done
+for f in ~/.scripts/*; do source $f; done #chmod +x $f &&
 
 # ----------------------------------------------------------------------
 # KEYS
@@ -20,6 +20,7 @@ bind '"\e[1;5C" forward-word'
 # ----------------------------------------------------------------------
 # ALIASES
 # ----------------------------------------------------------------------
+#system
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
@@ -40,9 +41,8 @@ alias trash="cd ~/.local/share/Trash/files/"
 alias dev="cd ~/dev"
 alias repos="cd $repdir"
 alias notes="cd $notesdir"
-alias ta="cd $tadir"
-alias funkis="cd $funkdir"
 alias distr="cd $distrdir"
+alias comps="cd $compsdir"
 #tree
 alias t='sudo tree'
 #gen 10 random chars
