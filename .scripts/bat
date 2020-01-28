@@ -2,12 +2,17 @@
 
 #battery status
 bat() {
-    if [ "$1" == "m" ]; then #mouse
-        param='mouse_dev'
-    elif [ "$1" == "k" ]; then #keyboard
-        param='mouse_hid'
-    else
-        param='BAT'
-    fi
+    case "$1" in
+    "m")
+        param="mouse_dev"
+        ;;
+    "k")
+        param="mouse_hid"
+        ;;
+    *)
+        param="BAT"
+        ;;
+    esac
+
     upower -i $(upower -e | grep $param) | grep 'time\|percentage' | sed -e 's/[^0-9]*//'
 }

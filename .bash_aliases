@@ -24,6 +24,7 @@ bind '"\e[1;5C" forward-word'
 alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
+alias blue='bluetooth'
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #list ports in usek
