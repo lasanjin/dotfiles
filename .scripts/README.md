@@ -25,8 +25,6 @@
    - Adjust sound volume `$1`
  - [screen](screen)
    - Adjust screen brightness `$1`
- - [blue](blue)
-   - Turn on/off bluetooth
  - [note](note)
    - Create & open note-yyyy-mm-dd-seq#
  - [spotify](spotify)
