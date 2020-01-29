@@ -1,0 +1,1 @@
+KERNEL=="hci0:256", SUBSYSTEM=="bluetooth", ACTION=="add", RUN+="/home/lasanjin/.plugs/bluetooth k"

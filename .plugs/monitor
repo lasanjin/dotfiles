@@ -1,13 +1,19 @@
 #!/bin/bash
 
+sleep 1
+
 read PORT </sys/class/drm/card0/card0-DP-2/status # connected/disconnected
+path="/home/lasanjin/.scripts/blue"
 
 if [ "$PORT" == "connected" ]; then
-    . /home/lasanjin/.scripts/blue && blue on
-    msg="Monitor connected: bluetooth on"
+    . $path && blue on
+    msg="Bluetooth ON"
 else
-    . /home/lasanjin/.scripts/blue && blue off
-    msg="Monitor disconnected: bluetooth off"
+    . $path && blue off
+    msg="Bluetooth OFF"
 fi
 
-sudo -u lasanjin DISPLAY=:0 DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send $msg
+sudo -u lasanjin \
+    DISPLAY=:0 \
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \
+    $msg
