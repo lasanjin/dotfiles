@@ -2,16 +2,18 @@
 
 sleep 1
 
-read PORT </sys/class/drm/card0/card0-DP-2/status # connected/disconnected
-path="/home/lasanjin/.scripts/blue"
+read STATUS </sys/class/drm/card0/card0-DP-2/status # connected/disconnected
 
-if [ "$PORT" == "connected" ]; then
-    . $path && blue on
+case "$STATUS" in
+"connected")
+    bluetooth on
     msg="Bluetooth ON"
-else
-    . $path && blue off
+    ;;
+*)
+    bluetooth on
     msg="Bluetooth OFF"
-fi
+    ;;
+esac
 
 sudo -u lasanjin \
     DISPLAY=:0 \
