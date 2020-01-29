@@ -19,7 +19,7 @@ esac
 # display bat level if <= 10 %
 if [ $(echo $batl | sed 's/[^0-9]*//g') -le 10 ]; then
     sudo -u lasanjin \
-        batlLAY=:0 \
+        DISPLAY=:0 \
         DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \
         $batl
 fi
