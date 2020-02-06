@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#compile and run java with params
+#compile and run java file with params
 jj() {
     local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
     local path=$(echo $1 | sed "s/"$f".*//")

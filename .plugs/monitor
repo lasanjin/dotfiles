@@ -7,15 +7,8 @@ read STATUS </sys/class/drm/card0/card0-DP-2/status # connected/disconnected
 case "$STATUS" in
 "connected")
     bluetooth on
-    msg="Bluetooth ON"
     ;;
 *)
-    bluetooth on
-    msg="Bluetooth OFF"
+    bluetooth off
     ;;
 esac
-
-sudo -u lasanjin \
-    DISPLAY=:0 \
-    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus notify-send \
-    $msg

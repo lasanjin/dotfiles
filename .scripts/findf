@@ -10,13 +10,13 @@ findf() {
 
     case "$2" in
     ".")
-        sudo find . -maxdepth 1 -iname "*$1*" ${@:3}
+        find . -maxdepth 1 -iname "*$1*" ${@:3}
         ;;
     *)
         if [[ "$2" == *"/"* ]]; then
             fdir $@
         else
-            sudo find -iname "*$1*" ${@:2}
+            find -iname "*$1*" ${@:2}
         fi
         ;;
     esac
@@ -25,14 +25,14 @@ findf() {
 fdir() {
     case "$3" in
     ".")
-        sudo find $2 -maxdepth 1 -iname "*$1*" ${@:3}
+        find $2 -maxdepth 1 -iname "*$1*" ${@:3}
         ;;
 
     *)
         if [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
-            sudo find $2 -maxdepth $3 -iname "*$1*" ${@:4}
+            find $2 -maxdepth $3 -iname "*$1*" ${@:4}
         else
-            sudo find $2 -iname "*$1*" ${@:3}
+            find $2 -iname "*$1*" ${@:3}
         fi
         ;;
     esac

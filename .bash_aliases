@@ -4,6 +4,7 @@
 # LOAD PATHS, VARIABLES etc.
 # ----------------------------------------------------------------------
 source ~/.miscellaneous
+source ~/.chalmers
 
 # ----------------------------------------------------------------------
 # LOAD SCRIPTS
@@ -39,8 +40,7 @@ alias trash="cd ~/.local/share/Trash/files/"
 alias dev="cd ~/dev"
 alias repos="cd $repdir"
 alias notes="cd $notesdir"
-alias distr="cd $distrdir"
-alias comps="cd $compsdir"
+alias todo="code -n $tododir/TODO.md"
 #tree
 alias t='sudo tree'
 #gen 10 random chars

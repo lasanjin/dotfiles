@@ -6,13 +6,13 @@ sleep 1
 
 case "$1" in
 "m")
-    batl="mouse: "$(bat $1)
+    batl="Mouse: "$(bat $1)
     ;;
 "k")
-    batl="keyboard: "$(bat $1)
+    batl="Keyboard: "$(bat $1)
     ;;
 *)
-    batl="uknown"
+    batl="Uknown"
     ;;
 esac
 
