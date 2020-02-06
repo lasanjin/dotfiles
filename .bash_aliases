@@ -33,11 +33,10 @@ alias ports='sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
 #bash files
-alias cbash='code -n ~/.bash_aliases ~/.scripts/ ~/.rules/ ~/.plugs/'
+alias cbash="code -n $bashfiles"
 alias rbash='source ~/.bash_aliases'
 #directories
-alias trash="cd ~/.local/share/Trash/files/"
-alias dev="cd ~/dev"
+alias trash="cd $trashdir"
 alias repos="cd $repdir"
 alias notes="cd $notesdir"
 alias todo="code -n $tododir/TODO.md"
@@ -52,7 +51,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
 alias spell='aspell -a'
 #clean trash & history
-alias cleant="sudo rm -rf ~/.local/share/Trash/files*"
+alias cleant="sudo rm -rf $trashdir*"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
 alias javas='sudo update-alternatives --config java'
