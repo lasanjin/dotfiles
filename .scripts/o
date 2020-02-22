@@ -6,5 +6,6 @@ o() {
         echo "Invalid input"
         return 0
     fi
+    
     xdg-open "$1" &>/dev/null
 }

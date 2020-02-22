@@ -4,6 +4,8 @@
 screen() {
     if [ -z $1 ]; then
         echo "Invalid input"
+        return 0
+
     elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ] && [ $1 -le 100 ]; then
         local param=$(bc <<<"scale=2; $1/100")
         xrandr --output DP-2 --brightness $param

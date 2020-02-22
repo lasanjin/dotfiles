@@ -7,5 +7,6 @@ red() {
         redshift -O $(($1 * 100)) &>/dev/null
     else
         echo "Invalid input"
+        return 0
     fi
 }

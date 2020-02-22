@@ -28,7 +28,7 @@ alias kill='sudo kill -9'
 alias blue='bluetooth'
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
-#list ports in usek
+#list ports in use
 alias ports='sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
@@ -54,7 +54,8 @@ alias spell='aspell -a'
 alias cleant="sudo rm -rf $trashdir*"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
-alias javas='sudo update-alternatives --config java'
+alias setjava='sudo update-alternatives --config java'
+alias setjavac='sudo update-alternatives --config javac'
 #python versions
 alias pythons='sudo update-alternatives --config python'
 #paste clipboard
