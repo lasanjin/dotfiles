@@ -54,8 +54,8 @@ alias spell='aspell -a'
 alias cleant="sudo rm -rf $trashdir*"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
-alias setjava='sudo update-alternatives --config java'
-alias setjavac='sudo update-alternatives --config javac'
+alias javas='sudo update-alternatives --config java'
+alias javacs='sudo update-alternatives --config javac'
 #python versions
 alias pythons='sudo update-alternatives --config python'
 #paste clipboard
