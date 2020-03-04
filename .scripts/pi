@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#amazing pi calc
+#amazing pi calc from http://mpmath.org/
 pi() {
     if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ]; then
         python -c "from mpmath import mp; mp.dps=$1; print mp.pi"

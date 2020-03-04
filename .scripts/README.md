@@ -1,43 +1,21 @@
 ## Scripts
 
- - [mouse](mouse)
-   - Change mouse sensitivity `$1`
- - [pi](pi)
-   - Output `$1` number of pi decimals 
-   - Python library [mpmath](http://mpmath.org/)
- - [save](save)
-   - Copy bash aliases, scripts etc.
- - [remove](remove)
-   - Uninstall application `$1`
- - [cdns](cdns)
-   - Flush DNS cache
- - [red](red)
-   - Adjusts color temperature `$1` of screen with Redshift
- - [o](o)
-   - Open file `$1`
- - [findf](findf)
-   - Search fname `$1` in dir `$2` with maxdepth `$3`
-   - `${@:X}` params, e.g. `-delete`
- - [findw](findw)
-   - Search word `$1` in file `$2`
-   - `${@:3}` additional params, e.g. ignore case: `-i`
- - [sound](sound)
-   - Adjust sound volume `$1`
- - [screen](screen)
-   - Adjust screen brightness `$1`
- - [note](note)
-   - Create & open note-yyyy-mm-dd-seq#
- - [spotify](spotify)
-   - Control Spotify
- - [co](co)
-   - Copy cmd output
- - [gpp](gpp)
-   - Compile & run C++
- - [jj](jj)
-   - Compile & run Java
- - [gs](gs)
-   - Run [Github traffic](https://github.com/lasanjin/github-traffic) script
- - [express](express)
-   - Run [expressen](https://github.com/lasanjin/chalmers-lunch-cli) script
- - [bat](bat)
-   - Battery status
+ - [π](pi)
+ - [Encrypt and decrypt file or directory](crypt)
+ - [Mouse sensitivity](mouse)
+ - [Save some files](save)
+ - [Purge application](remove)
+ - [Flush DNS cache](cdns)
+ - [Custom Redshift: sets color temperature of screen with](red)
+ - [Open file](o)
+ - [Custom find cmd](findf)
+ - [Custom find word in files](findw)
+ - [Adjust sound volume](sound)
+ - [Create & open a note with format: note-yyyy-mm-dd-seq#](note)
+ - [Control Spotify](spotify)
+ - [Copy cmd output](co)
+ - [Simple compile & run C++](gpp)
+ - [simple compile & run Java](jj)
+ - [git status of repos](gs) 
+ - [Expressen lunch](express) 
+ - [Battery status](bat) 
