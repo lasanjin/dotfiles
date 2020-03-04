@@ -18,12 +18,12 @@ ecrypt() {
     # save original file/dir name without '/' (if any)
     local fn=$(echo $1 | sed 's/\///g')
     # archive, remove original file, encrypt and ignore gpg warnings
-    tar --remove-files -cz $fn | sudo gpg -q -e -r $pk -o $dir$fn'.gpg' 2>/dev/null
+    tar --remove-files -cz $fn | sudo gpg -q -e -r $pk -o $fn'.gpg' 2>/dev/null
 }
 
 dcrypt() {
     # decrypt, unpack, remove encrypted file and ignore gpg warnings
-    sudo gpg -q -d $dir$1 2>/dev/null | tar xz && rm -f $1
+    sudo gpg -q -d $1 2>/dev/null | tar xz && rm -f $1
 }
 
 crypt $1 $2
