@@ -1,0 +1,29 @@
+#!/bin/bash
+
+dir=$PWD'/'
+
+crypt() {
+    case "$1" in
+    "e")
+        ecrypt $2
+        ;;
+    "d")
+        dcrypt $2
+        ;;
+    *) ;;
+    esac
+}
+
+ecrypt() {
+    # save original file/dir name without '/' (if any)
+    local fn=$(echo $1 | sed 's/\///g')
+    # archive, remove original file, encrypt and ignore gpg warnings
+    tar --remove-files -cz $fn | sudo gpg -q -e -r $pk -o $dir$fn'.gpg' 2>/dev/null
+}
+
+dcrypt() {
+    # decrypt, unpack, remove encrypted file and ignore gpg warnings
+    sudo gpg -q -d $dir$1 2>/dev/null | tar xz && rm -f $1
+}
+
+crypt $1 $2
