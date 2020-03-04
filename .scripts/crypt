@@ -1,7 +1,5 @@
 #!/bin/bash
 
-dir=$PWD'/'
-
 crypt() {
     case "$1" in
     "e")
