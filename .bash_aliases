@@ -51,7 +51,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
 alias spell='aspell -a'
 #clean trash & history
-alias cleant="sudo rm -rf $trashdir*"
+alias cleant="find $trashdir ! -name . | xargs rm -rf"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
 alias javas='sudo update-alternatives --config java'

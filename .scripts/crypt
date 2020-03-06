@@ -8,20 +8,47 @@ crypt() {
     "d")
         dcrypt $2
         ;;
-    *) ;;
+    *)
+        echo -e "\ncrypt [e]crypt or [d]ecrypt and [FILE]\n"
+        ;;
     esac
 }
 
 ecrypt() {
+
     # save original file/dir name without '/' (if any)
     local fn=$(echo $1 | sed 's/\///g')
     # archive, remove original file, encrypt and ignore gpg warnings
-    tar --remove-files -cz $fn | sudo gpg -q -e -r $pk -o $fn'.gpg' 2>/dev/null
+    tar -cz $fn | sudo gpg -q -e -r $pk -o $fn'.gpg' 2>/dev/null
+
+    check $? $1
 }
 
 dcrypt() {
     # decrypt, unpack, remove encrypted file and ignore gpg warnings
-    sudo gpg -q -d $1 2>/dev/null | tar xz && rm -f $1
+    sudo gpg -q -d $1 2>/dev/null | tar xz
+
+    check $? $1
 }
 
-crypt $1 $2
+check() {
+    # check if a command succeeded?
+    if [ $1 -eq 0 ]; then
+        echo OK
+        # ask if delete old file
+        read -p "DELETE \"$2\" ? (Y/N): " ans
+
+        case ${ans:0:1} in
+        y | Y)
+            # use srm (secure-delete) for proper purge
+            sudo rm -rf $2
+            echo OK
+            ;;
+        *)
+            echo ABORT
+            ;;
+        esac
+    else
+        echo FAILED
+    fi
+}
