@@ -27,7 +27,7 @@ ecrypt() {
 dcrypt() {
     # decrypt, unpack, remove encrypted file and ignore gpg warnings
     echo DECRYPTING...
-    sudo gpg -q -d $1 2>/dev/null | tar xz
+    sudo gpg -q --default-key $pk -d $1 2>/dev/null | tar xz
 
     check $? $1
 }
