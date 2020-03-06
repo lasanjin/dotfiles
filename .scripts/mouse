@@ -12,5 +12,8 @@ mouse() {
             sed 's/\s.*$//')
 
         xinput --set-prop $id "libinput Accel Speed" $1
+    
+    else
+        echo "mouse [-2.0..2.0]"
     fi
 }

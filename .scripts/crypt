@@ -9,7 +9,7 @@ crypt() {
         dcrypt $2
         ;;
     *)
-        echo -e "\ncrypt [e]crypt or [d]ecrypt and [FILE]\n"
+        echo -e "crypt [e|d] [FILE]"
         ;;
     esac
 }
@@ -18,6 +18,7 @@ ecrypt() {
     # save original file/dir name without '/' (if any)
     local fn=$(echo $1 | sed 's/\///g')
     # archive, remove original file, encrypt and ignore gpg warnings
+    echo ENCRYPTING...
     tar -cz $fn | sudo gpg -q -e -r $pk -o $fn'.gpg' 2>/dev/null
 
     check $? $1
@@ -25,6 +26,7 @@ ecrypt() {
 
 dcrypt() {
     # decrypt, unpack, remove encrypted file and ignore gpg warnings
+    echo DECRYPTING...
     sudo gpg -q -d $1 2>/dev/null | tar xz
 
     check $? $1

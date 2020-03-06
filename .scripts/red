@@ -6,7 +6,7 @@ red() {
     elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
         redshift -O $(($1 * 100)) &>/dev/null
     else
-        echo "Invalid input"
+        echo "red [stop|20..65]"
         return 0
     fi
 }

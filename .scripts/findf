@@ -4,7 +4,7 @@
 # ${@:X} params, e.g. -delete
 findf() {
     if [ -z "$1" ]; then
-        echo "Invalid input"
+        echo "findf [FILE] [DIR] [DEPTH] [-delete|...]"
         return
     fi
 

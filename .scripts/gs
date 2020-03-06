@@ -2,8 +2,14 @@
 
 #git status -$@ for all repositories in $repdir
 gs() {
-    find $repdir -maxdepth 2 -name ".git" 2>/dev/null \
+    if [ -z "$1" ]; then
+        echo "gs [-s|-v|...]"
+        return 0
+    fi
+    
+    find $repdir -maxdepth 2 -name ".git" \
         -execdir sh -c '(echo "\033[94m"${PWD##*/}"\033[0m")' \; \
         -execdir git status $@ \; \
-        -exec echo \;
+        -exec echo \; 2>/dev/null
+
 }

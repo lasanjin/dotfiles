@@ -2,10 +2,10 @@
 
 #amazing pi calc
 pi() {
-    if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 1 ]; then
+    if [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 2 ]; then
         python -c "from mpmath import mp; mp.dps=$1; print mp.pi"
     else
-        echo "Invalid input"
+        echo "pi [1...]"
         return 0
     fi
 }

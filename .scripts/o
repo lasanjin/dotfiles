@@ -3,7 +3,7 @@
 #open
 o() {
     if [ -z "$1" ]; then
-        echo "Invalid input"
+        echo "o [FILE|DIR]"
         return 0
     fi
     

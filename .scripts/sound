@@ -12,7 +12,7 @@ sound() {
         amixer -q -D pulse sset Master $1%
 
     else
-        echo "Invalid input"
+        echo "sound [on|off|1..150]"
         return 0
     fi
 }

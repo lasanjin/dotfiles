@@ -2,6 +2,11 @@
 
 #compile and run java file with params
 jj() {
+    if [ -z "$1" ]; then
+        echo "jj [*.java]"
+        return 0
+    fi
+
     local f=$(echo $1 | sed "s@.*/@@" | cut -f1 -d".")
     local path=$(echo $1 | sed "s/"$f".*//")
     javac -cp "$path" $1

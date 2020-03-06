@@ -6,4 +6,5 @@ save() {
     sudo cp -rf ~/.scripts/* "$repdir"dotfiles/.scripts/
     sudo cp -rf ~/.rules/* "$repdir"dotfiles/.rules/
     sudo cp -rf ~/.plugs/* "$repdir"dotfiles/.plugs/
+    echo OK
 }

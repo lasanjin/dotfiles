@@ -19,7 +19,7 @@ spotify() {
         ${CMD}.Stop
         ;;
     *)
-        echo "Invalid input"
+        echo "spotify [pp|next|prev|stop]"
         ;;
     esac
 }
