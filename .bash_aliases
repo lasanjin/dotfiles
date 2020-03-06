@@ -67,5 +67,5 @@ alias p='spotify prev'
 alias stop='spotify stop'
 #git traffic
 alias gt='python "$repdir"github-traffic/traffic.py'
-#facebook
+#messenger
 alias fb="$face -execdir {} \; 2>/dev/null"

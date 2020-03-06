@@ -15,7 +15,6 @@ crypt() {
 }
 
 ecrypt() {
-
     # save original file/dir name without '/' (if any)
     local fn=$(echo $1 | sed 's/\///g')
     # archive, remove original file, encrypt and ignore gpg warnings
