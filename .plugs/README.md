@@ -1,6 +1,6 @@
 ## Hotplugs
 
  - [monitor](monitor)
-   - Reads status of port and turns bluetooth on/off
+   - Turn bluetooth on/off when external screen is connected/disconnected to port
  - [bluetooth](bluetooth)
-   - Displays battery level <= 10% of connected mouse/keyboard
+   - Displays battery level of connected mouse/keyboard if <= 10% 
