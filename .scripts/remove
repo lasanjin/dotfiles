@@ -9,6 +9,8 @@ remove() {
         # use srm (secure-delete) for proper purge
         sudo apt-get --purge remove $1
         sudo apt-get autoremove
+        sudo apt-get autoclean
+        sudo apt-get clean
         echo OK
         ;;
     *)
