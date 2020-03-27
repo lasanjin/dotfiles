@@ -8,5 +8,5 @@ findpdf() {
         return
     fi
 
-    find $2 -iname '*.pdf' -exec pdfgrep -H -n -i $1 {} + #${@:3}
+    find $2 -iname '*.pdf' -exec pdfgrep -H -n ${@:3} $1 {} +
 }
