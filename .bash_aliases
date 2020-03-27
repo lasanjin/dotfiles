@@ -26,6 +26,7 @@ alias sleep="sudo systemctl suspend"
 alias die="sudo shutdown -h now"
 alias kill='sudo kill -9'
 alias blue='bluetooth'
+alias size='sudo du -h --max-depth=1 | sort -hr'
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #list ports in use
@@ -51,7 +52,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
 alias spell='aspell -a'
 #clean trash & history
-alias cleant="find $trashdir ! -name . | xargs rm -rf"
+alias cleant="find $trashdir ! -name . 2>/dev/null | xargs rm -rf"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
 alias javas='sudo update-alternatives --config java'

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#search word ($1) in pdf ($2)
+# ${@:3} additional params, e.g. ignore case: -i
+findpdf() {
+    if [ -z "$1" ]; then
+        echo "findf [FILE] [DIR] [DEPTH] [-delete|...]"
+        return
+    fi
+
+    find $2 -iname '*.pdf' -exec pdfgrep -H -n -i $1 {} + #${@:3}
+}
