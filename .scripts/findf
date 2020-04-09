@@ -1,38 +1,38 @@
 #!/bin/bash
 
-#search fname ($1) in dir ($2) with maxdepth ($3)
+#search type ($1), name ($2) in dir ($3) with maxdepth ($4)
 # ${@:X} params, e.g. -delete
 findf() {
     if [ -z "$1" ]; then
-        echo "findf [FILE] [DIR] [DEPTH] [-delete|...]"
+        echo "findf <FILE> <DIR> [DEPTH] [-delete|..]"
         return
     fi
 
-    case "$2" in
+    case "$3" in
     ".")
-        sudo find . -maxdepth 1 -iname "*$1*" ${@:3}
+        sudo find . -maxdepth 1 -type $1 -iname "*$2*" ${@:4}
         ;;
     *)
-        if [[ "$2" == *"/"* ]]; then
+        if [[ "$3" == *"/"* ]]; then
             fdir $@
         else
-            sudo find -iname "*$1*" ${@:2}
+            sudo find -type $1 -iname "*$2*" ${@:3}
         fi
         ;;
     esac
 }
 
 fdir() {
-    case "$3" in
+    case "$4" in
     ".")
-        sudo find $2 -maxdepth 1 -iname "*$1*" ${@:3}
+        sudo find $3 -maxdepth 1 -type $1 -iname "*$2*" ${@:4}
         ;;
 
     *)
-        if [[ "$3" =~ ^[0-9]+$ ]] && [ $3 -ge 1 ]; then
-            sudo find $2 -maxdepth $3 -iname "*$1*" ${@:4}
+        if [[ "$4" =~ ^[0-9]+$ ]] && [ $4 -ge 1 ]; then
+            sudo find $3 -maxdepth $4 -type $1 -iname "*$2*" ${@:5}
         else
-            sudo find $2 -iname "*$1*" ${@:3}
+            sudo find $3 -type $1 -iname "*$2*" ${@:4}
         fi
         ;;
     esac
