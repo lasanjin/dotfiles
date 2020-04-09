@@ -2,22 +2,43 @@
 
 #create & open note-yyyy-mm-dd-seq#
 note() {
-    # local uniq=$(date '+%N')
-    local date=$(date '+%F')
-    local f='note-'$date'-'
-    local fs=$notesdir$f*
-    local seq
+    # uniq=$(date '+%N')
+    case "$1" in
+    "md")
+        dir=$notesdir'mdnotes/'
+        ;;
+    *)
+        dir=$notesdir
+        ;;
+    esac
+
+    date=$(date '+%F')
+    f='note-'$date'-'
+    fs=$dir$f*
 
     if ls -U $fs &>/dev/null; then
-        seq=$(ls $fs | sort -n -t - -k 2 | tail -1 | sed 's/.*\-//')
+        seq=$(ls $fs |
+            sort -n -t - -k 2 |
+            tail -1 |
+            cut -f1 -d"." |
+            sed 's/.*\-//')
         ((seq++))
     else
         seq='1'
     fi
 
-    local name=$f$seq
-    touch $notesdir$name
-    echo -e $date'\n' >$notesdir$name
+    path=$dir$f$seq
 
-    o $notesdir$name
+    case "$1" in
+    "md")
+        touch $path'.md'
+        echo -e '# '$date'\n' >$path'.md'
+        code -n $path'.md'
+        ;;
+    *)
+        touch $path
+        echo -e $date'\n' >$path
+        o $path
+        ;;
+    esac
 }

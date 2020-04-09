@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# replace $1 with $2
+replace() {
+    if [ -z "$1" ] && [ -z "$2" ]; then
+        echo "repl <OLD> <NEW>"
+        return
+    fi
+
+    read -p "REPLACE ALL \"$1\" WITH \"$2\" ? (Y/N): " ans
+
+    case ${ans:0:1} in
+    y | Y)
+        find . -type f -exec sed -i "s/$1/$2/g" {} \;
+        echo OK
+        ;;
+    *)
+        echo ABORT
+        ;;
+    esac
+}

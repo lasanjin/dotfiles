@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# cat all files $1 in current dir
+list() {
+    BOLD='\e[1m'
+    BLUE='\e[94m'
+    DEFAULT='\e[0m'
+
+    for f in *$1*; do
+        echo -e ${BLUE}${BOLD}${f^^}${DEFAULT}
+        cat $f
+        printf "%$(tput cols)s\n\n" | tr " " =
+    done
+}

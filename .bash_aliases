@@ -44,9 +44,7 @@ alias todo="code -n $tododir/TODO.md"
 #tree
 alias t='sudo tree'
 #gen 10 random chars
-alias pass="openssl rand -base64 11"
-#time
-alias now='date +%T'
+alias rand="openssl rand -base64 $1"
 #sudo vscode
 alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
