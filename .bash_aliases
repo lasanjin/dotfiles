@@ -22,10 +22,10 @@ bind '"\e[1;5C" forward-word'
 # ALIASES
 # ----------------------------------------------------------------------
 #system
-alias sleep="sudo systemctl suspend"
-alias die="sudo shutdown -h now"
-alias kill='sudo kill -9'
 alias blue='bluetooth'
+alias kill='sudo kill -9'
+alias die="sudo shutdown -h now"
+alias sleep="sudo systemctl suspend"
 alias size='sudo du -h --max-depth=1 | sort -hr'
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
@@ -37,8 +37,8 @@ shopt -s autocd
 alias cbash="code -n $bashfiles"
 alias rbash='source ~/.bash_aliases'
 #directories
-alias trash="cd $trashdir"
 alias repos="cd $repdir"
+alias trash="cd $trashdir"
 alias notes="cd $notesdir"
 alias todo="code -n $tododir/TODO.md"
 #tree
@@ -68,3 +68,5 @@ alias stop='spotify stop'
 alias gt='python "$repdir"github-traffic/traffic.py'
 #messenger
 alias fb="$face -execdir {} \; 2>/dev/null"
+
+alias corona="python "$repdir""corona-swe/fhm.py" $@"

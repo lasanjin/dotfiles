@@ -12,7 +12,7 @@ ddate() {
         echo $((($from - $to) / (60 * 60 * 24)))
         ;;
     *)
-        echo "Usage: ddate + [date] <number_of_days> | d <start_date> <end_date>"
+        echo "Usage: ddate +|- [date] <number_of_days> | d <start_date> <end_date>"
         ;;
 
     esac

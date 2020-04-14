@@ -2,7 +2,8 @@
 
 sleep 1
 
-read STATUS </sys/class/drm/card0/card0-DP-2/status # connected/disconnected
+# card0-DP-1, card0-DP-2
+read STATUS </sys/class/drm/card0/card0-DP-1/status # connected/disconnected
 
 case "$STATUS" in
 "connected")
