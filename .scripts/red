@@ -1,12 +1,74 @@
 #!/bin/bash
 
+usage="Usage: red 20..65 | b 1..10 | stop"
+
 red() {
-    if [ "$1" == "stop" ]; then
-        redshift -x &>/dev/null
-    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 20 ] && [ $1 -le 65 ]; then
-        redshift -O $(($1 * 100)) &>/dev/null
-    else
-        echo "red [stop|20..65]"
-        return 0
-    fi
+    case $1 in
+    *[0-9]*)
+        if [ $1 -ge 20 ] && [ $1 -le 65 ]; then
+            temp=$(($1 * 100))
+            b=$(read_value 'b')
+
+            redshift -O $temp -b $b -m randr
+
+            save_value 't' $temp
+        else
+            echo $usage
+        fi
+        ;;
+    'b')
+        if [ $2 -ge 10 ] && [ $2 -le 100 ]; then
+            temp=$(read_value 't')
+            b=$(echo $2 | sed 's/..$/.&/')
+
+            redshift -O $temp -b $b -m randr
+
+            save_value 'b' $b
+        else
+            echo $usage
+        fi
+        ;;
+    'stop')
+        redshift -x -m randr
+
+        save_value '6500' '1.0'
+        ;;
+    *)
+        echo $usage
+        ;;
+    esac
+}
+
+save_value() {
+    mkdir -p $reddir
+    local tempdir=$reddir$redt
+    local bdir=$reddir$redb
+
+    case $1 in
+    't')
+        echo $2 >$tempdir
+        ;;
+    'b')
+        echo $2 >$bdir
+        ;;
+    *)
+        echo $1 >$tempdir && echo $2 >$bdir
+        ;;
+    esac
+}
+
+read_value() {
+    case $1 in
+    't')
+        local dir=$reddir$redt
+        local def='6500'
+        ;;
+    'b')
+        local dir=$reddir$redb
+        local def='1.0'
+        ;;
+    esac
+
+    [ -f $dir ] && v=$(cat $dir) || v=$def
+    echo $v
 }

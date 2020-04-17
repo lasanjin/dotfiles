@@ -2,17 +2,27 @@
 
 #volume: main sound & HDMI
 sound() {
-    if [ "$1" == "on" ]; then
+    usage="Usage: sound [on | off | 1..150]"
+
+    case $1 in
+    *[0-9]*)
+        if [ $1 -ge 0 ] && [ $1 -le 150 ]; then
+            amixer -q -D pulse sset Master $1%
+        else
+            echo $usage
+        fi
+        ;;
+    'on')
         amixer -q -D pulse sset Master on
-
-    elif [ "$1" == "off" ]; then
+        ;;
+    'off')
         amixer -q -D pulse sset Master off
-
-    elif [[ "$1" =~ ^[0-9]+$ ]] && [ $1 -ge 0 ] && [ $1 -le 150 ]; then
-        amixer -q -D pulse sset Master $1%
-
-    else
-        echo "sound [on|off|1..150]"
-        return 0
-    fi
+        ;;
+    '-h' | '--help')
+        echo $usage
+        ;;
+    *)
+        amixer -D pulse get Master | awk -F 'Left:|[][]' 'BEGIN {RS=""}{ print $3 }'
+        ;;
+    esac
 }

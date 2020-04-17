@@ -4,7 +4,7 @@
 # ${@:3} additional params, e.g. ignore case: -i
 findw() {
     if [ -z ${@:2} ]; then
-        echo "findw [WORD] [FILE] [-i|...]"
+        echo "findw <WORD> <FILE|.> [-i|...]"
     else
         sudo grep -rnw ${@:3} "$2" -e "$1"
     fi

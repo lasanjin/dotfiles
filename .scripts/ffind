@@ -2,9 +2,9 @@
 
 #search type ($1), name ($2) in dir ($3) with maxdepth ($4)
 # ${@:X} params, e.g. -delete
-findf() {
+ffind() {
     if [ -z "$1" ]; then
-        echo "findf <FILE> <DIR> [DEPTH] [-delete|..]"
+        echo "findf f|d <FILE> <DIR> [DEPTH] [-delete|..]"
         return
     fi
 
