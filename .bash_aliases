@@ -22,11 +22,13 @@ bind '"\e[1;5C" forward-word'
 # ALIASES
 # ----------------------------------------------------------------------
 #system
+alias getpid="xprop _NET_WM_PID | cut -d' ' -f3"
 alias blue='bluetooth'
 alias kill='sudo kill -9'
 alias die="sudo shutdown -h now"
 alias sleep="sudo systemctl suspend"
 alias size='sudo du -h --max-depth=1 | sort -hr'
+alias night="red 30 && red b 55"
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #list ports in use
@@ -68,5 +70,3 @@ alias stop='spotify stop'
 alias gt='python "$repdir"github-traffic/traffic.py'
 #messenger
 alias fb="$face -execdir {} \; 2>/dev/null"
-
-alias corona="python "$repdir""corona-swe/fhm.py" $@"
