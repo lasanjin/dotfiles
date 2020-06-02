@@ -29,10 +29,12 @@ alias die="sudo shutdown -h now"
 alias sleep="sudo systemctl suspend"
 alias size='sudo du -h --max-depth=1 | sort -hr'
 alias night="red 30 && red b 55"
+alias wifi="nmcli radio wifi $1"
+alias count="ls -1 | wc -l"
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #list ports in use
-alias ports='sudo lsof -i -P -n'
+alias ports='sudo netstat -lntup && echo "" && sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
 #bash files

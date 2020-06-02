@@ -1,12 +1,20 @@
 #!/bin/bash
 
-#search word ($1) in pdf ($2)
-# ${@:3} additional params, e.g. ignore case: -i
+#search:
+#in dir ($1) [word1 ($2) + "space" + word2 ($3)] near word3 ($4)
+#in dir ($1) word1 ($2) and word2 ($3) near each other
+#in dir ($1) string ($2)
 findpdf() {
-    if [ -z "$1" ]; then
-        echo "findf [FILE] [DIR] [DEPTH] [-delete|...]"
+    if ! [ $# -ge 2 ]; then
+        echo "findpdf <WORD> <PDF> [-i|...]"
         return
     fi
 
-    find $2 -iname '*.pdf' -exec pdfgrep -H -n ${@:3} $1 {} +
+    if [ $# -eq 4 ]; then
+        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\s$3\W+(\w+\W+){0,5}$4\b" {} +
+    elif [ $# -eq 3 ]; then
+        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\W+(\w+\W+){1,5}$3\b" {} + # "\b$2\W+(\w+\W+){1,5}$3|$3\W+(\w+\W+){1,5}$2\b"
+    else
+        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\b" {} +
+    fi
 }

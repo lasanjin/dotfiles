@@ -3,9 +3,9 @@
 #search word ($1) in file ($2)
 # ${@:3} additional params, e.g. ignore case: -i
 findw() {
-    if [ -z ${@:2} ]; then
+    if ! [ $# -eq 2 ]; then
         echo "findw <WORD> <FILE|.> [-i|...]"
     else
-        sudo grep -rnw ${@:3} "$2" -e "$1"
+        sudo grep --color='auto' -rnw ${@:3} "$2" -e "$1"
     fi
 }

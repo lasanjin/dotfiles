@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Duration in hours of all mp4 files in dir
+duration() {
+    seconds=$(find . -maxdepth 1 -iname '*.mp4' -exec ffprobe -v quiet -of csv=p=0 -show_entries format=duration {} \; | paste -sd+ - | bc | cut -f1 -d".")
+    bc <<<"scale=2; ${seconds}/3600" # hours
+}
