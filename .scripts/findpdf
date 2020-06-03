@@ -1,12 +1,8 @@
 #!/bin/bash
 
-#search:
-#in dir ($1) [word1 ($2) + "space" + word2 ($3)] near word3 ($4)
-#in dir ($1) word1 ($2) and word2 ($3) near each other
-#in dir ($1) string ($2)
 findpdf() {
     if ! [ $# -ge 2 ]; then
-        echo "findpdf <WORD> <PDF> [-i|...]"
+        usage
         return
     fi
 
@@ -17,4 +13,11 @@ findpdf() {
     else
         sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\b" {} +
     fi
+}
+
+usage() {
+    echo 'search in pdf-files in dir ($1):'
+    echo -e ' · word1 ($2) + ' ' + word2 ($3) near word3 ($4)'
+    echo -e ' · word1 ($2) and word2 ($3) near each other'
+    echo -e ' · string ($2)'
 }

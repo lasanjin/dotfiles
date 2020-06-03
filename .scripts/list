@@ -6,12 +6,13 @@ list() {
     BLUE='\e[94m'
     DEFAULT='\e[0m'
 
+    len=$(tput cols)
     fs=$(find . -maxdepth 1 -type f -iname "*$1*" | sort -V)
 
     for f in $fs; do
         name=$(echo $f | sed 's@.*/@@')
         echo -e ${BLUE}${BOLD}${name^^}${DEFAULT}
         cat $f
-        printf "%$(tput cols)s\n\n" | tr " " =
+        printf "%${len}s\n\n" | tr " " =
     done
 }
