@@ -17,7 +17,7 @@ findpdf() {
 
 usage() {
     echo 'search in pdf-files in dir ($1):'
-    echo -e ' · word1 ($2) + ' ' + word2 ($3) near word3 ($4)'
+    echo -e ' · word1 ($2) + " " + word2 ($3) near word3 ($4)'
     echo -e ' · word1 ($2) and word2 ($3) near each other'
     echo -e ' · string ($2)'
 }
