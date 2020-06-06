@@ -46,7 +46,7 @@ alias trash="cd $trashdir"
 alias notes="cd $notesdir"
 alias todo="code -n $tododir/TODO.md"
 #tree
-alias t='sudo tree'
+alias t="sudo tree --du -h --sort=size -L $1"
 #gen 10 random chars
 alias rand="openssl rand -base64 $1"
 #sudo vscode
