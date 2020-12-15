@@ -40,9 +40,9 @@ red() {
 }
 
 save_value() {
-    mkdir -p $reddir
-    local tempdir=$reddir$redt
-    local bdir=$reddir$redb
+    mkdir -p $REDDIR
+    local tempdir=$REDDIR$REDTEMP
+    local bdir=$REDDIR$REDB
 
     case $1 in
     't')
@@ -60,11 +60,11 @@ save_value() {
 read_value() {
     case $1 in
     't')
-        local dir=$reddir$redt
+        local dir=$REDDIR$REDTEMP
         local def='6500'
         ;;
     'b')
-        local dir=$reddir$redb
+        local dir=$REDDIR$REDB
         local def='1.0'
         ;;
     esac

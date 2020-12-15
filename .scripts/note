@@ -5,10 +5,10 @@ note() {
     # uniq=$(date '+%N')
     case "$1" in
     "md")
-        dir=$notesdir'mdnotes/'
+        dir=$NOTESDIR'mdnotes/'
         ;;
     *)
-        dir=$notesdir
+        dir=$NOTESDIR
         ;;
     esac
 
@@ -37,7 +37,8 @@ note() {
         ;;
     *)
         touch $path
-        echo -e $date'\n' >$path
+        time=$(date '+%H:%M')
+        echo -e $date $time'\n' >$path
         o $path
         ;;
     esac

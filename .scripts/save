@@ -2,9 +2,9 @@
 
 #copy bash files, scripts, rules etc.
 save() {
-    sudo cp -rf ~/.bash_aliases "$repdir"dotfiles
-    sudo cp -rf ~/.scripts/* "$repdir"dotfiles/.scripts/
-    sudo cp -rf ~/.rules/* "$repdir"dotfiles/.rules/
-    sudo cp -rf ~/.plugs/* "$repdir"dotfiles/.plugs/
+    sudo cp -rf ~/.bash_aliases "$REPDIR"dotfiles
+    sudo cp -rf ~/.scripts/* "$REPDIR"dotfiles/.scripts/
+    # sudo cp -rf ~/.rules/* "$REPDIR"dotfiles/.rules/
+    sudo cp -rf ~/.plugs/* "$REPDIR"dotfiles/.plugs/
     echo OK
 }

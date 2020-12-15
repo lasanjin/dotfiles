@@ -17,14 +17,14 @@ crypt() {
 ecrypt() {
     local fn=$(echo $1 | sed 's/\///g')
     echo ENCRYPTING...
-    tar -cz $fn | sudo gpg -q -e -r $pk -o $fn'.gpg' 2>/dev/null
+    tar -cz $fn | sudo gpg -q -e -r $PK -o $fn'.gpg' 2>/dev/null
 
     check $? $1
 }
 
 dcrypt() {
     echo DECRYPTING...
-    sudo gpg -q --default-key $pk -d $1 2>/dev/null | tar xz
+    sudo gpg -q --default-key $PK -d $1 2>/dev/null | tar xz
 
     check $? $1
 }

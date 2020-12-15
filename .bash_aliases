@@ -4,7 +4,6 @@
 # LOAD PATHS, VARIABLES etc.
 # ----------------------------------------------------------------------
 source ~/.miscellaneous
-source ~/.chalmers
 
 # ----------------------------------------------------------------------
 # LOAD SCRIPTS
@@ -38,13 +37,14 @@ alias ports='sudo netstat -lntup && echo "" && sudo lsof -i -P -n'
 #No need for cd
 shopt -s autocd
 #bash files
-alias cbash="code -n $bashfiles"
+alias cbash="code -n $BASHFILES"
 alias rbash='source ~/.bash_aliases'
 #directories
-alias repos="cd $repdir"
-alias trash="cd $trashdir"
-alias notes="cd $notesdir"
-alias todo="code -n $tododir/TODO.md"
+alias usb="cd $USBDIR"
+alias repos="cd $REPDIR"
+alias trash="cd $TRASHDIR"
+alias notes="cd $NOTESDIR"
+alias todo="code -n $TODODIR/TODO.md"
 #tree
 alias t="sudo tree --du -h --sort=size -L $1"
 #gen 10 random chars
@@ -54,7 +54,7 @@ alias scode='sudo code --user-data-dir="~/.vscode-root"'
 #spellcheck single words
 alias spell='aspell -a'
 #clean trash & history
-alias cleant="find $trashdir ! -name . 2>/dev/null | xargs rm -rf"
+alias cleant="find $TRASHDIR ! -name . 2>/dev/null | xargs rm -rf"
 alias cleanh="cat /dev/null > ~/.bash_history && history -c"
 #java versions
 alias javas='sudo update-alternatives --config java'
@@ -69,6 +69,6 @@ alias n='spotify next'
 alias p='spotify prev'
 alias stop='spotify stop'
 #git traffic
-alias gt='python "$repdir"github-traffic/traffic.py'
+alias gt="python "$REPDIR"github-traffic/traffic.py"
 #messenger
-alias fb="$face -execdir {} \; 2>/dev/null"
+alias fb="$FACE -execdir {} \; 2>/dev/null"

@@ -7,7 +7,7 @@ mouse() {
     if [[ "$1" =~ $re ]] && [ $1 -ge -2 ] && [ $1 -le 2 ]; then
 
         local id=$(xinput |
-            grep "$mouse.*pointer" |
+            grep "$MOUSE.*pointer" |
             sed -e 's/.*id=//' |
             sed 's/\s.*$//')
 
