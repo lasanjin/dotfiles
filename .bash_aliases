@@ -20,34 +20,25 @@ bind '"\e[1;5C" forward-word'
 # ----------------------------------------------------------------------
 # ALIASES
 # ----------------------------------------------------------------------
+#bash files
+alias cbash="code -n $BASHFILES"
+alias rbash='source ~/.bash_aliases'
 #system
 alias getpid="xprop _NET_WM_PID | cut -d' ' -f3"
 alias blue='bluetooth'
+alias night="red 30 && red b 55"
 alias kill='sudo kill -9'
 alias die="sudo shutdown -h now"
 alias sleep="sudo systemctl suspend"
 alias size='sudo du -h --max-depth=1 | sort -hr'
-alias night="red 30 && red b 55"
-alias wifi="nmcli radio wifi $1"
 alias count="ls -1 | wc -l"
 #redo cmd in sudo
 alias pls='sudo $(fc -ln -1)'
 #list ports in use
 alias ports='sudo netstat -lntup && echo "" && sudo lsof -i -P -n'
-#No need for cd
-shopt -s autocd
-#bash files
-alias cbash="code -n $BASHFILES"
-alias rbash='source ~/.bash_aliases'
-#directories
-alias usb="cd $USBDIR"
-alias repos="cd $REPDIR"
-alias trash="cd $TRASHDIR"
-alias notes="cd $NOTESDIR"
-alias todo="code -n $TODODIR/TODO.md"
 #tree
 alias t="sudo tree --du -h --sort=size -L $1"
-#gen 10 random chars
+#gen $1 random chars
 alias rand="openssl rand -base64 $1"
 #sudo vscode
 alias scode='sudo code --user-data-dir="~/.vscode-root"'
@@ -68,7 +59,9 @@ alias pp='spotify pp'
 alias n='spotify next'
 alias p='spotify prev'
 alias stop='spotify stop'
-#git traffic
-alias gt="python "$REPDIR"github-traffic/traffic.py"
-#messenger
-alias fb="$FACE -execdir {} \; 2>/dev/null"
+
+# ----------------------------------------------------------------------
+# OTHER
+# ----------------------------------------------------------------------
+#No need for cd
+shopt -s autocd

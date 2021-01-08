@@ -23,3 +23,4 @@
  - [Save some files](save)
  - [Adjust sound volume](sound)
  - [Control Spotify](spotify)
+ - [WiFi](wifi)

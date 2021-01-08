@@ -1,0 +1,12 @@
+#!/bin/bash
+
+wifi() {
+    case "$1" in
+    "on" | "off")
+        nmcli radio wifi $1
+        ;;
+    *)
+        watch -n1 "awk 'NR==3 {printf(\"WiFi signal strength = %.0f%%\\n\",\$3*10/7)}' /proc/net/wireless"
+        ;;
+    esac
+}
