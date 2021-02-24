@@ -7,17 +7,14 @@ findpdf() {
     fi
 
     if [ $# -eq 4 ]; then
-        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\s$3\W+(\w+\W+){0,5}$4\b" {} +
+        sudo find $4 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$1\s$2\W+(\w+\W+){0,5}$3\b" {} +
     elif [ $# -eq 3 ]; then
-        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\W+(\w+\W+){1,5}$3\b" {} + # "\b$2\W+(\w+\W+){1,5}$3|$3\W+(\w+\W+){1,5}$2\b"
+        sudo find $3 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$1\W+(\w+\W+){1,10}$2\b" {} + # "\b$2\W+(\w+\W+){1,5}$3|$3\W+(\w+\W+){1,5}$2\b"
     else
-        sudo find $1 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$2\b" {} +
+        sudo find $2 -iname '*.pdf' -exec pdfgrep -H -n -i "\b$1\b" {} +
     fi
 }
 
 usage() {
-    echo 'search in pdf-files in dir ($1):'
-    echo -e ' · word1 ($2) + " " + word2 ($3) near word3 ($4)'
-    echo -e ' · word1 ($2) and word2 ($3) near each other'
-    echo -e ' · string ($2)'
+    echo 'findpdf <DIR> <STRING>|<WORD> near <WORD>|<WORD> + " " + <WORD> near <WORD>'
 }

@@ -5,6 +5,9 @@ wifi() {
     "on" | "off")
         nmcli radio wifi $1
         ;;
+    "test")
+        curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -
+        ;;
     *)
         watch -n1 "awk 'NR==3 {printf(\"WiFi signal strength = %.0f%%\\n\",\$3*10/7)}' /proc/net/wireless"
         ;;
